@@ -1,0 +1,1637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Quiz Studio Pro</title>
+<link href="fonts.css" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--panel:#121212;--panel2:#1a1a1a;--line:#262626;--text:#f5f5f5;--muted:#a8a8a8;--red:#e62117;--gold:#ffb340;--green:#3ddc84}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif}
+header{padding:22px clamp(16px,4vw,42px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.mark{width:44px;height:44px;border-radius:13px;background:#e62117;display:grid;place-items:center;font-weight:900;font-size:21px;box-shadow:none}.brand h1{font-size:20px;margin:0;letter-spacing:-.5px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.badge{font-size:12px;color:#ffb8b3;border:1px solid #6d2824;background:#26110f;padding:6px 10px;border-radius:99px}
+main{max-width:1440px;margin:auto;padding:24px clamp(12px,3vw,32px) 48px;display:grid;grid-template-columns:minmax(310px,430px) minmax(0,1fr);gap:22px}
+.panel{background:#121212;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 14px 35px #0002}.panelhead{padding:17px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.panelhead h2{font-size:15px;margin:0}.content{padding:18px}.section{margin-bottom:22px}.section:last-child{margin-bottom:0}.label{display:block;color:#c7ceda;font-size:12px;font-weight:700;margin-bottom:8px;letter-spacing:.35px;text-transform:uppercase}
+input,select,textarea{width:100%;border:1px solid #343d4e;background:#1a1a1a;color:var(--text);border-radius:10px;padding:11px 12px;font:inherit;outline:none}input:focus,select:focus,textarea:focus{border-color:#e62117;box-shadow:0 0 0 2px #e6211722}textarea{resize:vertical;min-height:76px} .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choicewrap{position:relative}.choicewrap input{padding-right:36px}.choicewrap small{position:absolute;right:10px;top:11px;color:#8490a4}.correctrow{display:flex;gap:9px;align-items:center;margin-top:10px}.correctrow select{flex:1}.hint{font-size:12px;color:var(--muted);margin:7px 0 0}.btn{border:1px solid var(--line);border-radius:10px;background:#1a1a1a;color:var(--text);padding:10px 13px;font-weight:700;cursor:pointer;transition:.15s}.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}.btn.primary{background:#e62117;border:0;color:white}.btn.gold{background:#ffc857;color:#20190b;border:0}.btn.ghost{background:transparent}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.full{width:100%}.q-list{display:grid;gap:8px;margin-top:12px;max-height:210px;overflow:auto}.q-item{display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:#111;border-radius:10px;padding:10px}.q-item.active{border-color:var(--red);background:#26110f}.q-item .qtext{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13px}.q-item .num{color:var(--gold);font-weight:800}.mini{padding:5px 8px;font-size:12px}.rightcol{display:grid;gap:22px;align-content:start}.previewarea{padding:20px;display:grid;grid-template-columns:minmax(0,1fr);gap:18px}.screen{position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;border-radius:14px;background:#111827;border:1px solid #3a4353;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5%;text-align:center;isolation:isolate}.screen:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 20%,#e6211718,transparent 35%),radial-gradient(circle at 90% 85%,#ffb34012,transparent 32%);z-index:-1}.screen .eyebrow{font-size:clamp(9px,1.1vw,14px);letter-spacing:3px;color:var(--gold);font-weight:800;text-transform:uppercase;margin-bottom:4%}.screen .question{font-size:clamp(17px,3vw,38px);line-height:1.15;font-weight:850;max-width:900px;margin:0 auto 4%;letter-spacing:-.8px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:900px}.answer{padding:clamp(7px,1.4vw,14px);border:1px solid #4b5567;background:#202837;border-radius:9px;font-size:clamp(10px,1.45vw,18px);text-align:left;display:flex;gap:9px;align-items:center}.letter{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:7px;background:#374154;font-weight:900;color:#fff}.answer.correct{border-color:var(--green);background:#103023;color:#c8ffe6}.answer.correct .letter{background:var(--green);color:#08251b}.timerbar{margin-top:4%;width:min(420px,70%);height:8px;background:#303849;border-radius:20px;overflow:hidden}.timerfill{height:100%;width:100%;background:var(--red);transition:width .2s linear}.timernum{font-weight:900;font-size:clamp(15px,2.1vw,27px);margin-top:7px;color:var(--gold)}.screen.circular .timerbar{display:none}.screen.circular .timernum{border:4px solid var(--gold);border-radius:50%;width:64px;height:64px;display:grid;place-items:center;margin-top:12px}.screen.neon{box-shadow:inset 0 0 30px #a855f744}.screen.neon .timernum{text-shadow:0 0 12px #e62117}.screen.minimal .eyebrow{color:#b4c0d3}.screen.minimal .answer{background:#171d27}.screen.alert .timernum{color:#ff4057}.screen.color .timerfill{background:linear-gradient(90deg,#e62117,#ffb340)}.screen .foot{position:absolute;bottom:12px;left:16px;right:16px;display:flex;justify-content:space-between;color:#8994a7;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.status{font-size:12px;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{padding:12px;border:1px solid var(--line);border-radius:11px;background:#101010}.stat strong{display:block;font-size:21px}.stat span{font-size:11px;color:var(--muted)}.progress{height:4px;background:#2b3342;border-radius:9px;overflow:hidden;margin-top:14px}.progress div{height:100%;width:0;background:var(--red);transition:width .2s}.notice{border:1px solid #675126;background:#2c2516;color:#f7d997;border-radius:11px;padding:12px;font-size:12px;line-height:1.5}.exportnote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}.hidden{display:none!important}
+@media(max-width:900px){main{grid-template-columns:1fr}.rightcol{order:0}.screen .question{font-size:clamp(16px,4.2vw,32px)}.answer{font-size:clamp(10px,2.5vw,15px)}}
+.screen .pvcanvas{display:none}.screen.spanish{padding:0;background:#e6e6e6;border:1px solid #3a4353}.screen.spanish:before{display:none}.screen.spanish>*:not(.pvcanvas){display:none}.screen.spanish .pvcanvas{display:block;position:absolute;inset:0;width:100%;height:100%}
+</style></head>
+<body>
+<header>
+<button class="hbtn" id="menuBtn" aria-label="Open menu">☰ Menu</button>
+<div class="brand"><div class="mark">▶</div><div><h1>Quiz<b style="color:#ff3b30"> Studio Pro</b></h1><p>Create, narrate and export quiz videos.</p><p style="color:#ffb340;font-size:11px;margin-top:1px">Quiz Studio Pro</p></div></div>
+<div class="sp"></div><span class="badge">QUIZ VIDEO STUDIO</span><button class="hbtn" id="settingsJump">⚙ Settings</button><button class="hbtn" id="newProject">＋ New Project</button>
+</header>
+<div class="wrap"><div class="scrim hidden" id="scrim"></div><aside id="sidebar">
+<div class="side-h"><span>WORKSPACE</span></div>
+<button class="btn block" id="sideNew">＋ New Quiz Project</button>
+<div class="side-nav">
+<button class="side-link active" data-target="quizEditor">▦ Quiz Studio</button>
+<button class="side-link" data-target="templateManager">◈ My Templates</button>
+<button class="side-link" data-target="videoSettings">⚙ Video Settings</button>
+<button class="side-link" id="contactOpen" type="button">✉ About Quiz Studio Pro</button>
+</div>
+<div class="side-note">Create quiz videos, save reusable visual templates, and brand each video with your channel name. Your projects stay in this browser unless you export them.</div>
+</aside>
+<div id="contactModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px">
+ <div style="background:#111;border:1px solid #333;border-radius:14px;max-width:380px;width:100%;padding:22px;text-align:center;max-height:92vh;overflow:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><h3 style="margin:0;font-size:18px">✉ About Quiz Studio Pro</h3><button class="btn mini" id="contactClose" type="button">✕</button></div>
+  <p style="color:#a8a8a8;font-size:13px;margin:4px 0 14px">Koi masla ya sawal ho to hum se rabta karein:</p>
+  <p style="color:#cbd5e1;font-size:14px">Independent Android quiz video studio. Local projects are stored on this device. Configure a real TTS backend to generate narration.</p>
+  <button class="btn primary full" id="contactClose2" type="button">Close</button>
+ </div>
+</div>
+<main>
+<section class="panel" id="quizEditor">
+ <div class="panelhead"><h2>✦ Quiz Studio</h2><span class="status" id="saveStatus">Ready</span></div>
+ <div class="content">
+  <div class="section"><label class="label">Project title</label><input id="projectTitle" value="General Knowledge Quiz" maxlength="100"></div>
+  <div class="section"><label class="label">Your channel name (branding)</label><input id="channelName" value="" maxlength="70" placeholder="e.g. Amazing Quiz World"><p class="hint">This name appears inside the video as a channel brand.</p></div>
+  <div class="section"><label class="label">Header text (Yellow/Black template)</label><input id="headerText" value="GUESS THE ANSWER" maxlength="40"><p class="hint">Top bar text, e.g. GUESS THE ANSWER or any text in any language. Question number and total (NO /30) are filled automatically.</p></div>
+  <div class="section" style="margin-top:22px"><label class="label">Paste questions (table)</label><textarea id="bulkInput" placeholder="Paste a table with 7 columns: No. | Question | Option A | Option B | Option C | Option D | Correct (A/B/C/D). Header row is skipped. Also accepted: 6 columns without the number, tab-separated (copied from Sheets/Docs) or | separated. Single-line format: Question | Option A | Option B | Option C | Option D | Correct (letter A/B/C/D, or the full correct answer text). A leading number column and extra columns (e.g. explanation) are ignored."></textarea><button class="btn primary full" id="importBulk" style="margin-top:8px">Import Bulk Questions</button><p class="hint">Tip: separate each field with |. One question per line. List me kisi question par <b>Edit</b> dabao to wo yahin box me aa jata hai — badal kar <b>Save Edit</b> dabao.</p></div>
+  <div class="section"><div class="row" style="justify-content:space-between"><label class="label" style="margin:0">Question list</label><span class="status" id="qCount">0 questions</span></div><div class="q-list" id="questionList"></div></div>
+ </div>
+</section>
+<div class="rightcol">
+ <section class="panel" id="previewPanel"><div class="panelhead"><h2>◉ Video Preview</h2><span class="status" id="previewStatus">Question 0 of 0</span></div>
+ <div class="previewarea"><div class="screen" id="screen"><canvas class="pvcanvas" id="pvCanvas" width="1280" height="720"></canvas><div class="eyebrow" id="screenEyebrow">Quiz Studio Pro Challenge</div><div class="question" id="screenQuestion">Add your first question to begin</div><div class="answers" id="screenAnswers"></div><div class="timerbar"><div class="timerfill" id="timerFill"></div></div><div class="timernum" id="timerNum">10</div><div class="pgturn"></div><div class="foot"><span id="screenTitle">QUIZ STUDIO PRO</span><span id="screenCounter">READY TO PLAY</span></div></div>
+ <div class="row"><button class="btn primary" id="playBtn">▶ Play Quiz</button><button class="btn" id="prevBtn">← Previous</button><button class="btn" id="nextBtn">Next →</button><button class="btn ghost" id="stopBtn">■ Stop</button></div>
+ <div class="progress"><div id="overallProgress"></div></div>
+ <div class="row" style="margin:12px 0 4px"><button class="btn primary full" id="tplToggle" type="button" aria-expanded="false">🎨 Template Settings ▾</button></div>
+  <div class="stats"><div class="stat"><strong id="statQuestions">0</strong><span>Questions</span></div><div class="stat"><strong id="statDuration">0m</strong><span>Approx. duration</span></div><div class="stat"><strong id="statTimer">10s</strong><span>Countdown</span></div></div>
+ </div></section>
+ <section class="panel hidden" id="templateManager"><div class="panelhead"><h2>◈ Template Library</h2><span class="status" id="templateCount">0 saved</span></div><div class="content">
+  <p class="hint" style="margin-bottom:14px">Choose a starter style, customize timer/ratio, then save your own reusable template. Templates are saved in this browser.</p>
+  <div class="grid2 section"><div><label class="label">Starter template</label><select id="templatePreset"><option value="spanish">Yellow/Black Pill Quiz (your sample)</option><option value="classic">Tinglu Classic — Black/Red</option><option value="neon">Neon Challenge</option><option value="circular">Circular Countdown</option><option value="minimal">Premium Minimal</option><option value="alert">Red Alert</option><option value="color">Color Shift</option></select></div><div><label class="label">Saved templates</label><select id="savedTemplates"><option value="">No saved templates yet</option></select></div></div>
+  <div class="row"><button class="btn" id="applyPreset">Apply Starter</button><button class="btn" id="applySaved">Apply Saved</button><button class="btn primary" id="saveTemplate">＋ Save Current as Template</button></div>
+   <div class="row" style="margin-top:8px"><button class="btn" id="updateTemplate">Update selected</button><button class="btn" id="exportTemplate">Export selected</button><label class="btn ghost" for="importTemplate" style="cursor:pointer">Import template</label><input id="importTemplate" type="file" accept=".json,application/json" class="hidden"></div>
+  <div class="section" style="margin-top:18px"><label class="label">Template name</label><input id="templateName" placeholder="e.g. My Red Countdown Template" maxlength="60"></div>
+  <div class="section" style="margin-top:6px"><label class="label">Countdown sound</label><select id="cdSound"></select><div class="row" style="margin-top:6px"><button class="btn mini" id="cdPreview" type="button">▶ Preview</button><span class="hint" style="margin:0">Sunne ke liye Preview dabao; pasand aaye to wahi select rehne do.</span></div>
+   <div class="row" style="margin-top:8px"><label class="btn" for="cdUpload" style="cursor:pointer">＋ Apni sound add karo</label><input id="cdUpload" type="file" accept="audio/*" class="hidden"><button class="btn ghost" id="cdDelete" type="button" style="display:none">🗑 Hatao</button><span class="hint" style="margin:0" id="cdUploadStatus">mp3/wav/m4a, max 10 MB, 3 tak. Browser me save rehti hain.</span></div></div>
+   <details id="themeEditor" open style="margin:6px 0 16px"></details>
+   <div class="section"><label class="label">Use an existing video as visual reference (optional)</label><input id="referenceVideo" type="file" accept="video/*"><video id="referencePreview" controls class="hidden" style="width:100%;max-height:280px;margin-top:10px;border-radius:10px;background:#000"></video><p class="hint">The video can be previewed as a reference. It does not automatically convert the uploaded video into editable layers.</p></div>
+  <div id="templateList" class="q-list"></div>
+</div></section>
+<section class="panel" id="videoSettings"><div class="panelhead"><h2>⚙ Video & Timer Settings</h2><span class="status">Live preview</span></div><div class="content">
+  <div class="grid2 section"><div><label class="label">Timer duration</label><select id="timerDuration"><option value="5">5 seconds</option><option value="10" selected>10 seconds</option><option value="15">15 seconds</option><option value="20">20 seconds</option><option value="30">30 seconds</option></select></div><div><label class="label">Timer design</label><select id="timerStyle"><option value="spanish" selected>Yellow/Black Pill Quiz (your sample)</option><option value="classic">Classic progress bar</option><option value="circular">Circular timer</option><option value="neon">Neon glow</option><option value="alert">Red alert</option><option value="minimal">Premium minimal</option><option value="color">Color shift</option></select></div></div>
+  <div class="grid2 section"><div><label class="label">Video ratio</label><select id="ratio"><option value="16/9">YouTube 16:9</option><option value="9/16">Shorts/Reels 9:16</option><option value="1/1">Square 1:1</option></select></div></div>
+  <div class="section" id="ttsPanel">
+   <!-- CHANGE 3: With Narration / Without Narration selector -->
+   <div style="margin:0 0 12px 0;padding:10px 12px;background:#151518;border:1px solid #2a2a30;border-radius:8px">
+     <label class="label" style="margin:0 0 8px 0;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Narration Mode</label>
+     <div style="display:flex;gap:20px;align-items:center">
+       <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:700;color:#fff">
+         <input type="radio" name="narrationMode" id="narrationWith" value="with" checked style="width:auto;margin:0">
+         <span>With Narration</span>
+       </label>
+       <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;font-weight:700;color:#ccc">
+         <input type="radio" name="narrationMode" id="narrationWithout" value="without" style="width:auto;margin:0">
+         <span>Without Narration</span>
+       </label>
+     </div>
+   </div>
+
+   <div id="ttsControlsWrapper">
+     <label class="label">AI narration — Microsoft Edge Neural TTS</label>
+     <!-- CHANGE 1: Connection status and Refresh button -->
+     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px">
+       <div id="ttsStatus" class="hint" style="margin:0;flex:1">Loading Edge TTS voices…</div>
+       <button class="btn" id="ttsRefreshBtn" type="button" style="padding:4px 10px;font-size:12px;cursor:pointer;flex:none;background:#242428;border:1px solid #3c3c44;color:#fff;border-radius:6px">↻ Refresh</button>
+     </div>
+     <div class="grid2 section" style="margin:10px 0;grid-template-columns:1fr 1fr 1.7fr">
+       <div><label class="label">Language</label><select id="ttsLang"><option value="">All Languages</option></select></div>
+       <div><label class="label">Gender</label><select id="ttsGender"><option value="">All</option><option value="Female">Female</option><option value="Male">Male</option></select></div>
+       <div><label class="label">Voice</label><select id="ttsVoice"></select></div>
+     </div>
+     <div class="section" style="margin:8px 0"><label class="label">Speed <span id="ttsSpeedV">1.00</span></label><input id="ttsSpeed" type="range" min="0.8" max="1.3" step="0.05" value="1" style="padding:0"></div>
+     <label class="hint" style="display:block;margin:6px 0"><input type="checkbox" id="ttsRegen" style="width:auto;margin-right:6px">Sab questions dobara generate karo</label>
+     <div class="row" style="margin-top:8px"><button class="btn" id="ttsPreview">▶ Preview voice</button><button class="btn primary" id="ttsGenerate">Generate narration</button><button class="btn ghost" id="ttsClear">Narration hatao</button></div>
+
+     <!-- CHANGE 2: Slim narration progress bar -->
+     <div id="ttsProgressContainer" style="margin-top:10px;display:none;background:#151518;padding:8px 10px;border-radius:6px;border:1px solid #2a2a30">
+       <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+         <span id="ttsOpStatus" style="font-weight:600;color:#f5f5f5">Generating narration: 0%</span>
+         <span id="ttsPercent" style="font-weight:700;color:#e62117">0%</span>
+       </div>
+       <div id="ttsProgressBar" style="width:100%;height:5px;background:#26262a;border-radius:3px;overflow:hidden">
+         <div id="ttsProgressFill" style="height:100%;width:0%;background:#e62117;transition:width 0.2s ease"></div>
+       </div>
+       <div id="ttsProgressDetails" class="hint" style="margin-top:4px;font-size:12px;color:#aaa">Question 1 of 5</div>
+     </div>
+     <div id="ttsProgress" class="hint" style="margin-top:6px"></div>
+   </div>
+
+   <div id="withoutNarrationNotice" class="notice" style="display:none;margin-top:8px;background:#18181c;border-left:4px solid #38bdf8">
+     <b>Without Narration Mode:</b> Video will export with countdown sound effects, question visuals, answer reveals, and timer animations without voiceover. Narration generation skipped.
+   </div>
+  </div>
+
+  <div class="row"><button class="btn" id="testSounds">🔊 Test Sounds</button><button class="btn" id="saveProject">Save Project JSON</button><label class="btn ghost" for="loadProject" style="cursor:pointer">Load Project JSON</label><input id="loadProject" type="file" accept=".json,application/json" class="hidden"></div>
+  <div class="notice" style="margin-top:16px"><b>Export status:</b> Video seedhi pehle question se shuru hoti hai (koi cover nahi). Har agla question book-page opening ke sath aata hai. Countdown me wahi sound bajti hai jo aap ne "Countdown sound" me select ki hai. <span id="cdSoundStatus" class="hint"></span><br>Export hamesha direct MP4 hota hai — koi conversion nahi, koi WebM fallback nahi. Agar kisi purane browser me MP4 support na ho to video download nahi hogi aur saaf message milega.</div>
+  <div class="row" style="margin-top:14px"><label class="label" style="margin:0">Export quality</label><select id="exportQuality" style="width:auto"><option value="1080" selected>1080p — Full HD</option><option value="720">720p — HD</option><option value="480">480p — tez, chhoti file</option></select><label class="label" style="margin:0 0 0 12px">Frame rate</label><select id="exportFps" style="width:auto"><option value="15">15 fps</option><option value="20">20 fps</option><option value="24" selected>24 fps</option><option value="25">25 fps</option><option value="30">30 fps</option></select><span class="hint" style="margin:0">Zyada fps = zyada smooth, file bhi bari</span></div>
+  <div class="row" style="margin-top:14px"><button class="btn gold" id="exportBtn">⬇ Export Quiz Video (MP4)</button><button class="btn" id="stopExportBtn" type="button" style="display:none;background:#ffffff;color:#111111;border:1px solid #cccccc;font-weight:700">&#9632; Stop Exporting</button><span class="status" id="exportStatus">Ready to export</span></div>
+
+  <!-- CHANGE 2: Separate export progress bar and percentage -->
+  <div id="exportProgressContainer" style="margin-top:10px;display:none;background:#151518;padding:8px 10px;border-radius:6px;border:1px solid #2a2a30">
+    <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+      <span id="exportOpStatus" style="font-weight:600;color:#f5f5f5">Preparing video export…</span>
+      <span id="exportPercent" style="font-weight:700;color:#ffc857">0%</span>
+    </div>
+    <div id="exportProgressBar" style="width:100%;height:5px;background:#26262a;border-radius:3px;overflow:hidden">
+      <div id="exportProgressFill" style="height:100%;width:0%;background:#ffc857;transition:width 0.2s ease"></div>
+    </div>
+    <div id="exportProgressDetails" class="hint" style="margin-top:4px;font-size:12px;color:#aaa"></div>
+  </div>
+
+  <!-- CHANGE 2: Compact Live Activity information with expandable log -->
+  <div id="liveActivityBar" style="margin-top:12px;padding:8px 12px;background:#121215;border:1px solid #26262c;border-radius:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <div style="display:flex;align-items:center;gap:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">
+        <span style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase">Activity:</span>
+        <span id="liveLatestMsg" style="font-size:12px;color:#e0e0e0">Ready</span>
+      </div>
+      <button id="toggleLiveLogs" type="button" class="btn ghost" style="padding:2px 8px;font-size:11px;cursor:pointer;flex:none">Logs ▾</button>
+    </div>
+    <div id="liveLogList" class="hidden" style="margin-top:8px;padding-top:8px;border-top:1px solid #222;max-height:120px;overflow-y:auto;font-family:monospace;font-size:11px;line-height:1.5;color:#bbb">
+    </div>
+  </div>
+
+  <div class="hint" id="mp4Badge">MP4 Direct: checking…</div><p class="exportnote">Direct MP4: video seedha MP4 (H.264) me banti hai — koi conversion, koi WebM nahi. Quality aur Frame rate upar wale menu se chunein (1080p / 720p / 480p · frame rate 15–30 fps, default 24 fps). Rendering ke doran tab khula rakhein; lambi video par phone me waqt lag sakta hai.</p>
+ </div></section>
+</div></div>
+</main></div>
+<style>
+header{position:sticky;top:0;z-index:40;background:#0a0a0a;border-bottom:1px solid #262626;padding:10px 14px;gap:10px}
+.brand h1{font-size:19px;font-weight:800;letter-spacing:.2px;white-space:nowrap}.brand p{font-size:11px;color:#a8a8a8;white-space:nowrap}.mark{border-radius:6px;background:#e62117;width:32px;height:25px;font-size:16px}.hbtn{background:#1a1a1a;border:1px solid #333;color:#f5f5f5;border-radius:8px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer}.wrap{display:flex;max-width:1500px;margin:0 auto;min-height:calc(100vh - 58px)}aside{width:245px;flex:none;border-right:1px solid #262626;padding:14px 12px;background:#0a0a0a}.side-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.side-h span{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a8a8a8}.side-nav{display:grid;gap:5px;margin-top:12px}.side-link{background:transparent;color:#d8d8d8;border:1px solid transparent;border-radius:8px;padding:11px;text-align:left;font:inherit;cursor:pointer}.side-link:hover,.side-link.active{background:#1a1a1a;border-color:#333;color:#fff}.side-note{margin-top:16px;font-size:12px;color:#6f6f6f;border-top:1px solid #262626;padding-top:12px}main{flex:1;min-width:0;max-width:none;margin:0;padding:16px;grid-template-columns:minmax(290px,420px) minmax(0,1fr);align-content:start}.panel{border-radius:10px;box-shadow:none}.panelhead{border-bottom:1px solid #262626}.btn.primary{background:#e62117}.btn.primary:hover{background:#c0130c}.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:55}.hidden{display:none!important}@media(max-width:1000px){main{grid-template-columns:1fr}}@media(max-width:820px){#menuBtn{display:block}aside{display:none;position:fixed;top:0;left:0;bottom:0;z-index:60;width:280px;background:#121212;box-shadow:0 0 40px #0009;overflow:auto}aside.open{display:block}main{padding:14px 12px 50px}.scrim:not(.hidden){display:block}}
+/* ===== TEMPLATE STUDIO: preview LEFT (fix/sticky), settings RIGHT (apni scroll) ===== */
+body.studio main{grid-template-columns:minmax(0,1fr) 460px;align-items:start}
+body.studio #quizEditor,body.studio #videoSettings{display:none}
+body.studio .rightcol{display:contents}
+body.studio #previewPanel{grid-column:1;grid-row:1;position:sticky;top:70px;max-height:calc(100vh - 82px);overflow-y:auto}
+body.studio #templateManager{grid-column:2;grid-row:1;height:calc(100vh - 82px);overflow-y:auto}
+@media(max-width:1000px){
+ body.studio main{grid-template-columns:1fr}
+ body.studio #previewPanel{grid-column:1;grid-row:1;max-height:54vh;z-index:5}
+ body.studio #templateManager{grid-column:1;grid-row:2;height:auto;max-height:none;overflow-y:visible}
+}
+</style>
+
+<style>
+.pgturn{position:absolute;inset:0;z-index:6;pointer-events:none;display:none;transform-origin:left center;background:linear-gradient(105deg,#251a0f,#150d05);box-shadow:inset -40px 0 70px rgba(0,0,0,.6)}
+.screen.spanish .pgturn{background:linear-gradient(105deg,#d6d6d6,#eeeeee)}
+.screen{perspective:1400px}
+.screen.pageturn .pgturn{display:block;animation:pgTurn .9s cubic-bezier(.5,0,.3,1) both}
+@keyframes pgTurn{from{transform:rotateY(0deg)}to{transform:rotateY(-103deg)}}
+.screen.pageturn .question{animation:qIn .8s .25s both}
+.screen.pageturn .answer{animation:aIn .55s both}
+.screen.pageturn .answer:nth-child(1){animation-delay:.4s}
+.screen.pageturn .answer:nth-child(2){animation-delay:.5s}
+.screen.pageturn .answer:nth-child(3){animation-delay:.6s}
+.screen.pageturn .answer:nth-child(4){animation-delay:.7s}
+@keyframes qIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes aIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+</style>
+<script src="quiz-studio-pro-bridge.js"></script><script src="timeline-engine.js"></script>
+<script type="module">import * as __Mp4Muxer from './mp4-muxer.mjs'; window.Mp4Muxer=__Mp4Muxer;</script>
+<script>
+const $=id=>document.getElementById(id);
+let questions=[],current=-1,editing=-1,playing=false,stopRequested=false,playToken=0;
+function clearForm(){editing=-1;const b=$('importBulk');if(b)b.textContent='Import Bulk Questions'}
+function valid(q){return q.question&&q.options.every(Boolean)&&q.correct>=0&&q.correct<4}
+function addQ(q){questions.push(q);current=questions.length-1;renderList();renderPreview();$('saveStatus').textContent='Question added';}
+function renderList(){let list=$('questionList');list.innerHTML='';questions.forEach((q,i)=>{let el=document.createElement('div');el.className='q-item'+(i===current?' active':'');el.innerHTML=`<span class="num">${String(i+1).padStart(2,'0')}</span><span class="qtext"></span><button class="btn mini" data-edit="${i}">Edit</button><button class="btn mini ghost" data-del="${i}">×</button>`;el.querySelector('.qtext').textContent=(q.audioData?'🔊 ':'')+q.question;list.appendChild(el)});list.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{editing=+b.dataset.edit;const q=questions[editing],c=t=>String(t).replace(/\|/g,'/');$('bulkInput').value=[q.question,...q.options,'ABCD'[q.correct]].map(c).join(' | ');$('importBulk').textContent='Save Edit (question '+(editing+1)+')';$('bulkInput').focus();$('bulkInput').scrollIntoView({block:'center'})});list.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{let i=+b.dataset.del;if(editing>=0){clearForm();$('bulkInput').value=''}questions.splice(i,1);if(current>=questions.length)current=questions.length-1;renderList();renderPreview()});$('qCount').textContent=questions.length+' question'+(questions.length===1?'':'s');$('statQuestions').textContent=questions.length;$('statDuration').textContent=Math.ceil(questions.reduce((s,q)=>s+Math.max(3,q.question.split(/\s+/).length/2.5)+ +$('timerDuration').value,0)/60)+'m';$('previewStatus').textContent=questions.length?`Question ${Math.max(0,current+1)} of ${questions.length}`:'Question 0 of 0'}
+function parseBulkLine(raw){
+ let line=raw.replace(/｜/g,'|').trim();
+ if(/^\|?[\s:\-|]+\|?$/.test(line)&&/-/.test(line))return {skip:true};          // markdown separator row
+ let cells;
+ if(line.includes('|')){line=line.replace(/^\|/,'').replace(/\|$/,'');cells=line.split('|')}
+ else if(line.includes('\t'))cells=line.split('\t');
+ else return {err:'separator | nahi mila (har field ko | se alag karein)'};
+ cells=cells.map(x=>x.trim());
+ if(/^(#|no\.?|n°|num|number|question|question number|pregunta)$/i.test(cells[0])||cells.some(c=>/^correct( answer)?$/i.test(c)))return {skip:true};  // header row
+ if(/^\d+[.)]?$/.test(cells[0])&&cells.length>=6)cells.shift();                  // leading "#" number column
+ if(cells.length<6)return {err:`sirf ${cells.length} fields mile, 6 chahiye (Question | A | B | C | D | Correct)`};
+ let question=cells[0],opts=cells.slice(1,5);
+ if(opts.every((o,i)=>new RegExp('^'+'ABCD'[i]+'[).:]\\s+','i').test(o)))opts=opts.map(o=>o.replace(/^[A-D][).:]\s+/i,''));
+ let c=cells[5],ci=-1;
+ let m=/^(?:option\s*|opci[oó]n\s*|answer\s*)?\(?([A-D])\)?[.):]?$/i.exec(c);
+ if(m)ci='ABCD'.indexOf(m[1].toUpperCase());
+ else{let norm=x=>x.toLowerCase().replace(/\s+/g,' ').trim();ci=opts.findIndex(o=>norm(o)===norm(c))}
+ if(ci<0)return {err:`Correct answer "${c.slice(0,25)}" na A/B/C/D hai na kisi option se match karta hai`};
+ let q={question,options:opts,correct:ci};
+ if(!valid(q))return {err:'question ya koi option khali hai'};
+ return {q};
+}
+$('importBulk').onclick=()=>{
+ if(editing>=0){
+  const line=$('bulkInput').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean)[0]||'';
+  const r=parseBulkLine(line);
+  if(!r.q){alert('Edit save nahi hui: '+(r.err||'line theek nahi')+'\nFormat: Question | A | B | C | D | Correct');return}
+  const o=questions[editing],q=r.q;
+  if(o&&o.ttsEngine){if(o.question===q.question){q.audioData=o.audioData;q.ttsEngine=o.ttsEngine;q.ttsKey=o.ttsKey;q.ttsVoice=o.ttsVoice}}
+  questions[editing]=q;current=editing;clearForm();$('bulkInput').value='';renderList();renderPreview();$('saveStatus').textContent='Changes saved';
+  if(typeof scheduleSave==='function')scheduleSave();
+  return;
+ }
+ const rawText=$('bulkInput').value;
+ if(!rawText.trim()){alert('Paste questions into the box first.');return;}
+
+ let good=0,errs=[],keep=[];
+ if(window.QuizStudioImport && typeof QuizStudioImport.parseText==='function'){
+   const parsed=QuizStudioImport.parseText(rawText, /^\s*[\[{]/.test(rawText.trim()) ? 'json' : 'text');
+   if(parsed.questions && parsed.questions.length){
+     parsed.questions.forEach(q=>{questions.push(q);good++});
+   }
+   if(parsed.errors && parsed.errors.length){
+     errs=parsed.errors;
+   }
+ } else {
+   let lines=rawText.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+   lines.forEach((line,idx)=>{let r=parseBulkLine(line);if(r.skip)return;if(r.q){questions.push(r.q);good++}else{errs.push(`Line ${idx+1}: ${r.err}`);keep.push(line)}});
+   $('bulkInput').value=keep.join('\n');
+ }
+ if(good){
+   current=questions.length-1;
+   renderList();
+   renderPreview();
+   if(typeof scheduleSave==='function')scheduleSave();
+   if(!errs.length)$('bulkInput').value='';
+ }
+ let msg=`Imported ${good} question(s).`;
+ if(errs.length)msg+=`\n\n${errs.length} line(s) import nahi hui:\n`+errs.slice(0,6).join('\n')+(errs.length>6?`\n…aur ${errs.length-6}`:'');
+ alert(msg);
+};
+function renderPreview(reveal=false,remaining=null){let q=questions[current];let screen=$('screen');screen.className='screen '+$('timerStyle').value;screen.style.aspectRatio=$('ratio').value;drawPreviewCanvas(reveal,remaining); $('screenTitle').textContent=( $('channelName').value.trim() || $('projectTitle').value || 'TINGLU QUIZ').toUpperCase();$('screenCounter').textContent=questions.length?`${String(Math.max(0,current+1)).padStart(2,'0')} / ${String(questions.length).padStart(2,'0')}`:'READY TO PLAY';$('overallProgress').style.width=questions.length?`${(current+1)/questions.length*100}%`:'0%';$('timerFill').style.width=remaining===null?'100%':`${Math.max(0,remaining/+ $('timerDuration').value*100)}%`;$('timerNum').textContent=remaining===null?$('timerDuration').value:Math.ceil(remaining);
+if(!q){$('screenEyebrow').textContent='QUIZ STUDIO PRO CHALLENGE';$('screenQuestion').textContent='Add your first question to begin';$('screenAnswers').innerHTML='';$('previewStatus').textContent='Question 0 of 0';return}
+$('screenEyebrow').textContent='QUESTION '+(current+1);$('screenQuestion').textContent=q.question;$('screenAnswers').innerHTML='';q.options.forEach((v,i)=>{let a=document.createElement('div');a.className='answer'+(reveal&&i===q.correct?' correct':'');let l=document.createElement('span');l.className='letter';l.textContent=reveal&&i===q.correct?'✓':'ABCD'[i];let t=document.createElement('span');t.textContent=v;a.append(l,t);$('screenAnswers').appendChild(a)});$('previewStatus').textContent=`Question ${current+1} of ${questions.length}`}
+function playAudioClip(data){if(!data)return Promise.resolve();return new Promise(resolve=>{let a=new Audio(data);a.onended=resolve;a.onerror=resolve;a.play().catch(resolve)})}
+function playQuestionVoice(q){return playAudioClip(q.audioData)}
+function playAnswerVoice(q){return playAudioClip(q.answerAudioData)}
+['timerDuration','timerStyle','ratio','projectTitle'].forEach(id=>$(id).addEventListener('change',()=>{renderPreview();renderList()}));
+$('prevBtn').onclick=()=>{if(!questions.length)return;current=Math.max(0,current-1);renderPreview();renderList()};
+$('nextBtn').onclick=()=>{if(!questions.length)return;current=Math.min(questions.length-1,current+1);renderPreview();renderList()};
+$('stopBtn').onclick=()=>{stopTensionPreview();stopRequested=true;playing=false;playToken++;$('playBtn').textContent='▶ Play Quiz';$('saveStatus').textContent='Stopped';renderPreview()};
+$('playBtn').onclick=async()=>{if(!questions.length){alert('Add or import questions first.');return}if(playing){$('stopBtn').click();return}playing=true;stopRequested=false;let token=++playToken;$('playBtn').textContent='Ⅱ Playing…';for(let i=0;i<questions.length;i++){if(stopRequested||token!==playToken)break;current=i;renderList();if(i>0)openPagePreview();renderPreview(false);await playQuestionVoice(questions[i]);if(stopRequested||token!==playToken)break;let d=+$('timerDuration').value;startTensionPreview(d);let t0=performance.now();while(true){if(stopRequested||token!==playToken)break;let left=d-(performance.now()-t0)/1000;if(left<=0)break;renderPreview(false,left);await new Promise(r=>setTimeout(r,50))}stopTensionPreview();if(stopRequested||token!==playToken)break;renderPreview(false,0);try{previewAudioCtx=previewAudioCtx||new (window.AudioContext||window.webkitAudioContext)();playTimeUpSound(previewAudioCtx,null)}catch(e){}await new Promise(r=>setTimeout(r,220));renderPreview(true,0);try{playRevealSound(previewAudioCtx,null)}catch(e){}await playAnswerVoice(questions[i]);await new Promise(r=>setTimeout(r,700))}playing=false;if(token===playToken){$('playBtn').textContent='▶ Play Quiz';$('saveStatus').textContent='Playback complete';if(!stopRequested){current=questions.length-1;renderList();renderPreview(true,0)}}};
+$('newProject').onclick=()=>{if(questions.length&&!confirm('Start a new project? Save your current project JSON first if needed.'))return;questions=[];current=-1;clearForm();$('projectTitle').value='General Knowledge Quiz';renderList();renderPreview();$('saveStatus').textContent='New project'};
+$('saveProject').onclick=()=>{let data={app:'Quiz Studio Pro',version:1,title:$('projectTitle').value,channelName:$('channelName').value,settings:{cdSound:CD_SOUND,timerDuration:$('timerDuration').value,timerStyle:$('timerStyle').value,ratio:$('ratio').value,exportQuality:($('exportQuality')||{}).value||'1080',exportFps:($('exportFps')||{}).value||'24',headerText:$('headerText').value,theme:THEME,tts:ttsSettings()},questions};let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=($('projectTitle').value||'tinglu-quiz').replace(/[^a-z0-9-_]+/gi,'_')+'.json';a.click();URL.revokeObjectURL(a.href);$('saveStatus').textContent='Project downloaded'};
+$('loadProject').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());questions=(d.questions||[]).filter(valid);$('projectTitle').value=d.title||'Imported Quiz';$('channelName').value=d.channelName||'';let s=d.settings||{};if(s.cdSound)setCdSound(s.cdSound);if(s.timerDuration)$('timerDuration').value=s.timerDuration;if(s.timerStyle)$('timerStyle').value=s.timerStyle;if(s.ratio)$('ratio').value=s.ratio;if(s.exportQuality&&$('exportQuality'))$('exportQuality').value=s.exportQuality;if(s.exportFps&&$('exportFps'))$('exportFps').value=s.exportFps;if(typeof s.headerText==='string')$('headerText').value=s.headerText;if(s.theme){setTheme(s.theme);syncThemeUI();ensureFonts().then(()=>renderPreview())}if(s.tts)applyTtsSettings(s.tts);current=questions.length?0:-1;renderList();renderPreview();$('saveStatus').textContent='Project loaded'}catch(err){alert('Could not read this project JSON.')}e.target.value=''};
+function drawCanvas(ctx,w,h,q,idx,total,remaining,reveal,anim){anim=anim||{enter:1};if($('timerStyle').value==='spanish')return drawSpanish(ctx,w,h,q,idx,total,remaining,reveal,anim);ctx.clearRect(0,0,w,h);let g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#111827');g.addColorStop(.55,'#171c2a');g.addColorStop(1,'#0b0d12');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);let glow=ctx.createRadialGradient(w*.12,h*.1,5,w*.12,h*.1,w*.8);glow.addColorStop(0,'#ff405722');glow.addColorStop(1,'#ff405700');ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);ctx.save();ctx.globalAlpha*=Math.max(0,Math.min(1,anim.enter));ctx.translate(0,(1-Math.max(0,Math.min(1,anim.enter)))*h*0.035);ctx.textAlign='center';ctx.fillStyle='#ffc857';ctx.font=`800 ${Math.max(18,w*.022)}px ${SP_FONT}`;ctx.fillText('QUESTION '+(idx+1),w/2,h*.13);ctx.fillStyle='#f4f6fb';ctx.font=`800 ${Math.max(28,w*.042)}px ${SP_FONT}`;let words=q.question.split(/\s+/),lines=[],line='';for(let word of words){let test=line?line+' '+word:word;if(ctx.measureText(test).width>w*.83&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);let qfs=Math.max(25,w*.042),lh=qfs*1.18;ctx.font=`800 ${qfs}px ${SP_FONT}`;let startY=h*.28-(lines.length-1)*lh/2;lines.forEach((l,i)=>ctx.fillText(l,w/2,startY+i*lh,w*.88));ctx.restore();let top=Math.max(h*.48,startY+lines.length*lh+h*.035),gap=w*.025,boxW=(w*.84-gap)/2,boxH=Math.min(h*.105,Math.max(48,h*.105));q.options.forEach((o,i)=>{let x=w*.08+(i%2)*(boxW+gap),y=top+Math.floor(i/2)*(boxH+h*.025);let correct=reveal&&i===q.correct;let oi=Math.max(0,Math.min(1,anim.enter*1.7-i*0.22));ctx.save();ctx.globalAlpha*=oi;let cxp=x+boxW/2,cyp=y+boxH/2;ctx.translate(cxp,cyp);ctx.scale(Math.max(.05,oi),Math.max(.05,oi));ctx.translate(-cxp,-cyp);ctx.fillStyle=correct?'#10382d':'#202837';ctx.strokeStyle=correct?'#42d392':'#4b5567';ctx.lineWidth=2;roundRect(ctx,x,y,boxW,boxH,12);ctx.fill();ctx.stroke();ctx.textAlign='left';ctx.fillStyle=correct?'#42d392':'#9eabc0';ctx.font=`800 ${Math.max(17,w*.022)}px ${SP_FONT}`;ctx.fillText(correct?'✓':'ABCD'[i],x+boxW*.05,y+boxH*.62);ctx.fillStyle=correct?'#c8ffe6':'#f4f6fb';ctx.font=`600 ${Math.max(15,w*.019)}px ${SP_FONT}`;ctx.fillText(o,x+boxW*.14,y+boxH*.62,boxW*.8);ctx.restore()});let barW=w*.42,barX=(w-barW)/2,barY=h*.91;ctx.fillStyle='#303849';roundRect(ctx,barX,barY,barW,10,5);ctx.fill();ctx.fillStyle=$('timerStyle').value==='color'?'#38bdf8':remaining<=3?'#ff4057':'#ffc857';roundRect(ctx,barX,barY,barW*Math.max(0,remaining/+$('timerDuration').value),10,5);ctx.fill();ctx.textAlign='center';ctx.fillStyle=remaining<=3?'#ff4057':'#ffc857';ctx.font=`900 ${Math.max(22,w*.03)}px ${SP_FONT}`;ctx.fillText(String(remaining),w/2,barY-12);ctx.textAlign='left';ctx.fillStyle='#8994a7';ctx.font=`600 ${Math.max(11,w*.012)}px ${SP_FONT}`;ctx.fillText(($('channelName').value.trim()||$('projectTitle').value||'QUIZ STUDIO PRO').toUpperCase(),w*.035,h*.97);ctx.textAlign='right';ctx.fillText(`${idx+1} / ${total}`,w*.965,h*.97)}
+
+
+// ===== v10 SOUND ENGINE — all sounds are synthesized with WebAudio (no files, no loops).
+// The same scheduling functions work live (preview / recorder export) AND offline
+// (the WebCodecs export renders the whole audio track before encoding, so the
+// tension + reveal sounds are baked into the MP4 and can never go missing). =====
+let previewAudioCtx=null, previewTension=null;
+function toneNodes(ctx,dest,frequency,when,duration,volume=0.16,type='sine'){
+ if(!ctx)return; const o=ctx.createOscillator(),g=ctx.createGain();
+ o.type=type; o.frequency.value=frequency;
+ g.gain.setValueAtTime(0.0001,when);
+ g.gain.exponentialRampToValueAtTime(volume,when+0.015);
+ g.gain.exponentialRampToValueAtTime(0.001,when+duration);
+ o.connect(g); g.connect(ctx.destination); if(dest&&dest!==ctx.destination)g.connect(dest);
+ o.start(when); o.stop(when+duration+0.05);
+}
+function playTone(ctx,frequency,duration,volume=0.16,type='sine',dest=null,delay=0){ try{ toneNodes(ctx,dest,frequency,ctx.currentTime+(delay||0),duration,volume,type); }catch(e){} }
+function playRevealSound(ctx,dest){ playTone(ctx,880,.14,.20,'sine',dest,0); playTone(ctx,1175,.20,.17,'sine',dest,0.09); playTone(ctx,1568,.26,.10,'sine',dest,0.18); }
+function playTimeUpSound(ctx,dest){ playTone(ctx,392,.18,.19,'triangle',dest,0); playTone(ctx,311,.28,.17,'triangle',dest,0.11); }
+// ===== Countdown sound = YOUR file: sounds/countdown.mp3 (.wav/.ogg/.m4a also work). No file -> silent countdown. =====
+let COUNTDOWN_BUF=null,COUNTDOWN_NAME='';
+function updateSoundStatus(){const el=$('cdSoundStatus');if(el)el.textContent=COUNTDOWN_BUF?`Option 7 (Meri file): ✓ ${COUNTDOWN_NAME} mili (${COUNTDOWN_BUF.duration.toFixed(1)}s).`:'Option 7 (Meri file) ke liye sounds/countdown.mp3 chahiye — abhi nahi mili.'}
+async function loadCountdownSound(){
+ for(const ext of ['mp3','wav','ogg','m4a']){
+  try{const r=await fetch(`sounds/countdown.${ext}`,{cache:'no-store'});if(!r.ok)continue;if(/text\/html/i.test(r.headers.get('content-type')||''))continue;
+   const ab=await r.arrayBuffer();const c=new (window.OfflineAudioContext||window.webkitOfflineAudioContext)(2,1,48000);COUNTDOWN_BUF=await c.decodeAudioData(ab);COUNTDOWN_NAME='countdown.'+ext;break}catch(e){}
+ }
+ updateSoundStatus();
+}
+const COUNTDOWN_READY=Promise.all([loadCountdownSound(),loadCustomSounds()]);
+// Plays the file once from `when`; if it is longer than the countdown it is faded out at the end, if shorter it just ends (no loop).
+function bufTrim(buf){ // first/last moment with real sound (cached) — voice countdown files carry ~0.8s silence at both ends
+ if(buf._trim)return buf._trim;
+ let sr=buf.sampleRate,a=0,b=buf.length;
+ outer: for(let c=0;c<buf.numberOfChannels;c++){const d=buf.getChannelData(c);for(let i=0;i<d.length;i++){if(Math.abs(d[i])>0.02){a=i;break outer}}}
+ outer2: for(let c=0;c<buf.numberOfChannels;c++){const d=buf.getChannelData(c);for(let i=d.length-1;i>0;i--){if(Math.abs(d[i])>0.02){b=i+1;break outer2}}}
+ buf._trim={start:Math.max(0,a/sr-0.03),end:Math.min(buf.duration,b/sr+0.05)};return buf._trim}
+function scheduleBufSound(buf,ctx,dest,when,dur){
+ if(!buf)return null;
+ try{
+  const tr=bufTrim(buf),eff=Math.max(0.2,tr.end-tr.start);
+  const src=ctx.createBufferSource();src.buffer=buf;
+  src.playbackRate.value=Math.min(2,Math.max(0.5,eff/dur)); // whole file (10..1) fits exactly inside the countdown — '1' is always heard before the reveal
+  if(buf._pk===undefined){let p=0;for(let c=0;c<buf.numberOfChannels;c++){const d=buf.getChannelData(c);for(let i=0;i<d.length;i+=2)p=Math.max(p,Math.abs(d[i]))}buf._pk=p}
+  const lv=buf._pk>.9?.9/buf._pk:1;const g=ctx.createGain();g.gain.setValueAtTime(lv,when);
+  src.connect(g);g.connect(ctx.destination);if(dest&&dest!==ctx.destination)g.connect(dest);
+  src.start(when,tr.start);src.stop(when+dur+0.05);
+  return {stop(){try{src.stop()}catch(e){}}};
+ }catch(e){return null}
+}
+function scheduleCountdownFile(ctx,dest,when,dur){return scheduleBufSound(COUNTDOWN_BUF,ctx,dest,when,dur)}
+// ---- your own sounds: uploaded once, kept in this browser (IndexedDB), up to 3 ----
+const CUSTOM_BUFS={},CUSTOM_NAMES={};
+function idb(){return new Promise((res,rej)=>{try{const r=indexedDB.open('tinglu_sounds',1);r.onupgradeneeded=()=>r.result.createObjectStore('s');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}})}
+async function idbAll(){const d=await idb();return new Promise((res,rej)=>{const o={},tx=d.transaction('s').objectStore('s').openCursor();tx.onsuccess=()=>{const c=tx.result;if(c){o[c.key]=c.value;c.continue()}else res(o)};tx.onerror=()=>rej(tx.error)})}
+async function idbPut(k,v){const d=await idb();return new Promise((res,rej)=>{const t=d.transaction('s','readwrite');t.objectStore('s').put(v,k);t.oncomplete=res;t.onerror=()=>rej(t.error)})}
+async function idbDel(k){const d=await idb();return new Promise((res,rej)=>{const t=d.transaction('s','readwrite');t.objectStore('s').delete(k);t.oncomplete=res;t.onerror=()=>rej(t.error)})}
+async function decodeBytes(ab){const c=new (window.OfflineAudioContext||window.webkitOfflineAudioContext)(2,1,48000);return c.decodeAudioData(ab.slice(0))}
+function renderCdOptions(){const el=$('cdSound');if(!el)return;const keep=CD_SOUND;el.innerHTML='';
+ const list=[...CD_SOUNDS.filter(x=>!/^custom/.test(x[0])&&x[0]!=='pack1'&&x[0]!=='file'&&x[0]!=='none'),...(CUSTOM_BUFS.pack1?[['pack1','🎵 Tumhari sound — 10-1 (11.8s)']]:[]),...[1,2,3].filter(n=>CUSTOM_BUFS['custom'+n]).map(n=>['custom'+n,`🎵 Meri sound ${n}: ${CUSTOM_NAMES['custom'+n]}`]),CD_SOUNDS.find(x=>x[0]==='file'),CD_SOUNDS.find(x=>x[0]==='none')];
+ list.forEach(([v,l])=>{const o=document.createElement('option');o.value=v;o.textContent=l;el.appendChild(o)});
+ if(![...el.options].some(o=>o.value===keep)){CD_SOUND='clock'}el.value=CD_SOUND;
+ const del=$('cdDelete');if(del)del.style.display=/^custom/.test(CD_SOUND)?'':'none'}
+async function loadPackSounds(){try{const r=await fetch('sounds/10-1_256k.mp3',{cache:'no-store'});if(!r.ok||/text\/html/i.test(r.headers.get('content-type')||''))return;CUSTOM_BUFS.pack1=await decodeBytes(await r.arrayBuffer());CUSTOM_NAMES.pack1='Tumhari sound (10-1)';CD_SOUNDS.push(['pack1','pack1'])}catch(e){}}
+async function loadCustomSounds(){let all={};await loadPackSounds();try{all=await idbAll()}catch(e){}
+ for(const k of Object.keys(all)){if(!/^custom[1-3]$/.test(k))continue;try{CUSTOM_BUFS[k]=await decodeBytes(all[k].data);CUSTOM_NAMES[k]=String(all[k].name||k).slice(0,40);CD_SOUNDS.push([k,CUSTOM_NAMES[k]])}catch(e){}}
+ try{const v=localStorage.getItem('tinglu_cd_sound');if(v&&(CD_SOUNDS.some(x=>x[0]===v)))CD_SOUND=v}catch(e){}
+ renderCdOptions()}
+async function addCustomSound(file){
+ if(!file)return;if(file.size>10*1024*1024){alert('File 10 MB se badi hai. Chhoti sound chuno.');return}
+ let ab,buf;try{ab=await file.arrayBuffer();buf=await decodeBytes(ab)}catch(e){alert('Ye audio file parhi nahi ja saki. mp3 / wav / m4a / ogg try karo.');return}
+ if(buf.duration>60){alert('Sound 60 second se lambi nahi honi chahiye.');return}
+ let slot=[1,2,3].map(n=>'custom'+n).find(k=>!CUSTOM_BUFS[k]);if(!slot){alert('3 sounds pehle se hain. Pehle ek hata do (select karke "Hatao" dabao).');return}
+ CUSTOM_BUFS[slot]=buf;CUSTOM_NAMES[slot]=file.name.replace(/\.[^.]+$/,'').slice(0,40);CD_SOUNDS.push([slot,CUSTOM_NAMES[slot]]);
+ try{await idbPut(slot,{name:CUSTOM_NAMES[slot],data:ab})}catch(e){alert('Sound is session me chalegi, par browser me save nahi ho saki.')}
+ setCdSound(slot);renderCdOptions();const st=$('cdUploadStatus');if(st)st.textContent=`✓ "${CUSTOM_NAMES[slot]}" add ho gayi (${buf.duration.toFixed(1)}s).`;$('cdPreview')&&$('cdPreview').click()}
+async function removeCustomSound(){const k=CD_SOUND;if(!/^custom[1-3]$/.test(k))return;if(!confirm(`"${CUSTOM_NAMES[k]}" hata dun?`))return;
+ try{await idbDel(k)}catch(e){}delete CUSTOM_BUFS[k];delete CUSTOM_NAMES[k];const i=CD_SOUNDS.findIndex(x=>x[0]===k);if(i>=0)CD_SOUNDS.splice(i,1);setCdSound('clock');renderCdOptions()}
+
+// ===== Countdown sound library: 6 built-in premium sounds + your own file + none. Everything is scheduled in absolute time. =====
+const CD_SOUNDS=[['clock','1 · Clock Tick — ghadi ki tik-tok'],['pulse','2 · Quiz Pulse — har second gehra pulse, aakhir me tez'],['drums','3 · Cinema Drums — dum-dum tension drums'],['digital','4 · Digital Beeps — saaf beep har second, aakhri beep lambi'],['keys','5 · Tension Keys — piano ki tez hoti dhun'],['file','6 · Meri file (sounds/countdown.mp3)'],['none','No Sound']];
+let CD_SOUND='clock';try{const v=localStorage.getItem('tinglu_cd_sound');if(CD_SOUNDS.some(x=>x[0]===v))CD_SOUND=v}catch(e){}
+function setCdSound(id){if(!CD_SOUNDS.some(x=>x[0]===id))return;CD_SOUND=id;const el=$('cdSound');if(el)el.value=id;const dl=$('cdDelete');if(dl)dl.style.display=/^custom/.test(id)?'':'none';try{localStorage.setItem('tinglu_cd_sound',id)}catch(e){}}
+function cdBus(ctx,dest,when,dur,level){
+ const master=ctx.createGain();master.connect(ctx.destination);if(dest&&dest!==ctx.destination)master.connect(dest);
+ master.gain.setValueAtTime(level,when);master.gain.setValueAtTime(level,when+Math.max(0,dur-0.15));master.gain.linearRampToValueAtTime(0.0001,when+dur);
+ const nodes=[];
+ return {master,nodes,out:{stop(){try{nodes.forEach(n=>{try{n.stop()}catch(e){}});master.gain.cancelScheduledValues(ctx.currentTime);master.gain.setTargetAtTime(0.0001,ctx.currentTime,0.04)}catch(e){}}}};
+}
+// one short enveloped note: optional pitch sweep to `end`
+function cdNote(ctx,b,type,f,t,len,vol,end,filt){
+ const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(end)o.frequency.exponentialRampToValueAtTime(end,t+len);
+ g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(vol,t+0.006);g.gain.exponentialRampToValueAtTime(0.0001,t+len);
+ let out=g;if(filt){const bq=ctx.createBiquadFilter();bq.type='lowpass';bq.frequency.value=filt;g.connect(bq);out=bq}
+ o.connect(g);out.connect(b.master);o.start(t);o.stop(t+len+0.03);b.nodes.push(o);
+}
+const CD_SYNTH={
+ clock(ctx,b,w,d){ let t=0,i=0;while(t<d-0.05){const fast=t>d-3.2,iv=fast?.5:1;
+   cdNote(ctx,b,'square',i%2?1350:1850,w+t,.035,.35,null,5200);cdNote(ctx,b,'sine',i%2?620:880,w+t,.09,.5);
+   if(fast)cdNote(ctx,b,'sine',2400,w+t+.01,.05,.12);
+   t+=iv;i++} },
+ pulse(ctx,b,w,d){ let t=0;while(t<d-0.05){const fast=t>d-3,iv=fast?.5:1;
+   cdNote(ctx,b,'sine',130,w+t,.28,.95,44);cdNote(ctx,b,'triangle',260,w+t,.12,.25,90);
+   cdNote(ctx,b,'square',1900,w+t,.03,.18,null,5200);
+   t+=iv} },
+ drums(ctx,b,w,d){ let t=0,i=0;while(t<d-0.05){const fast=t>d-3,iv=fast?.5:1,k=t/d;
+   cdNote(ctx,b,'sine',160,w+t,.32,1,40);cdNote(ctx,b,'sine',90,w+t,.3,.6,36);
+   if(i%2===1||fast)cdNote(ctx,b,'triangle',420,w+t+iv*.5,.09,.16,180);
+   if(k>.55)cdNote(ctx,b,'sine',220,w+t,.2,.3,60);
+   t+=iv;i++} },
+ digital(ctx,b,w,d){ let t=0;while(t<d-0.05){const last=t>=d-1;
+   cdNote(ctx,b,'sine',last?1318:880,w+t,last?.3:.08,.6);
+   if(!last)cdNote(ctx,b,'sine',1760,w+t,.04,.12);
+   t+=1} },
+ keys(ctx,b,w,d){ const seq=[110,110,130.81,110,110,164.81,146.83,130.81];let t=0,i=0;
+  while(t<d-0.05){const k=t/d,iv=.5*Math.pow(.45,k)+.14,f=seq[i%seq.length]*(i>=seq.length?2:1);
+   cdNote(ctx,b,'triangle',f,w+t,Math.min(.3,iv*1.15),.8);cdNote(ctx,b,'sine',f*2,w+t,Math.min(.2,iv),.18);
+   t+=iv;i++} }
+};
+const CD_LEVEL={clock:1.15,pulse:.6,drums:.62,digital:.55,keys:.5};
+function scheduleCountdownSound(id,ctx,dest,when,dur){
+ if(id==='none')return null;
+ if(id==='file')return scheduleCountdownFile(ctx,dest,when,dur);
+ if(/^(custom[1-3]|pack1)$/.test(id))return scheduleBufSound(CUSTOM_BUFS[id],ctx,dest,when,dur);
+ const f=CD_SYNTH[id];if(!f)return null;
+ try{const b=cdBus(ctx,dest,when,dur,CD_LEVEL[id]||.5);f(ctx,b,when,dur);return b.out}catch(e){return null}
+}
+function scheduleCountdown(ctx,dest,when,dur){return scheduleCountdownSound(CD_SOUND,ctx,dest,when,dur)}
+function cdBuf(){return CD_SOUND==='file'?COUNTDOWN_BUF:(CUSTOM_BUFS[CD_SOUND]||null)}
+function cdHasSound(){return CD_SOUND!=='none'&&(CD_SOUND!=='file'&&!/^(custom|pack)/.test(CD_SOUND)||!!cdBuf())}
+(function(){const el=$('cdSound');if(!el)return;renderCdOptions();
+ let pv=null;const btn=$('cdPreview');const stop=()=>{try{pv&&pv.stop()}catch(e){}pv=null;if(btn)btn.textContent='▶ Preview'};
+ const play=async()=>{stop();await COUNTDOWN_READY;try{previewAudioCtx=previewAudioCtx||new (window.AudioContext||window.webkitAudioContext)();await previewAudioCtx.resume();const d=Math.min(10,+$('timerDuration').value||10);
+   pv=scheduleCountdown(previewAudioCtx,null,previewAudioCtx.currentTime+.05,d);if(!pv){if(CD_SOUND==='file')alert('sounds/countdown.mp3 abhi nahi mili.');return}btn.textContent='■ Stop';const mine=pv;setTimeout(()=>{if(pv===mine)stop()},d*1000+150)}catch(e){}};
+ el.onchange=()=>{setCdSound(el.value);renderCdOptions();if(el.value!=='none')play();else stop()};
+ if(btn)btn.onclick=()=>{if(pv)stop();else play()};
+ const up=$('cdUpload');if(up)up.onchange=async()=>{const f=up.files[0];up.value='';await addCustomSound(f)};const dl=$('cdDelete');if(dl)dl.onclick=removeCustomSound;
+})();
+
+// ===== Countdown timer designs (8). All use the template's Timer colour 1 / 2 / track. =====
+const TIMER_LOOKS=[['capsule','1 · Premium Capsule (bar)'],['segments','2 · LED Segments (bar)'],['ring','3 · Dial Ring (circle)'],['neon','4 · Neon Ring (circle)'],['pie','5 · Pie Wedge (circle)'],['clock','6 · Analog Clock (sui ghoomti hai)'],['stopwatch','7 · Stopwatch (sui ghoomti hai)'],['orb','8 · Pulse Orb (glow)'],['flatbar','9 · Classic Flat Bar (bar)'],['bold','10 · Bold Stopwatch (poster)']];
+function mixHex(a,b,t){const A=parseInt(a.slice(1),16),B=parseInt(b.slice(1),16),m=(x,y)=>Math.round(x+(y-x)*t);return '#'+[16,8,0].map(sh=>m(A>>sh&255,B>>sh&255).toString(16).padStart(2,'0')).join('')}
+function borderGrad(ctx,y0,y1){const c=THEME.timerBorder,g=ctx.createLinearGradient(0,y0,0,y1);g.addColorStop(0,mixHex(c,'#ffffff',.35));g.addColorStop(.5,mixHex(c,'#000000',.14));g.addColorStop(1,mixHex(c,'#000000',.45));return g}
+function cdText(ctx,txt,x,y,size,fill,pulse,shadow){ctx.save();ctx.translate(x,y);const sc=1+.14*(pulse||0);ctx.scale(sc,sc);ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`900 ${size}px ${SP_FONT}`;if(shadow){ctx.shadowColor=shadow;ctx.shadowBlur=size*.35}ctx.fillStyle=fill;ctx.fillText(txt,0,0);ctx.restore()}
+function metalRing(ctx,cx,cy,R,glow){ctx.save();ctx.shadowColor=glow||'rgba(0,0,0,.38)';ctx.shadowBlur=glow?R*.5:R*.25;ctx.shadowOffsetY=glow?0:R*.08;
+ let g=borderGrad(ctx,cy-R,cy+R);ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();ctx.restore()}
+function drawTimerLook(ctx,w,h,tY,tH,remaining){
+ const dur=+$('timerDuration').value||10, hasRem=!(remaining===null||remaining===undefined);
+ const secLeft=hasRem?Math.max(0,remaining):dur, frac=Math.max(0,Math.min(1,secLeft/dur));
+ const shown=hasRem?Math.min(dur,Math.ceil(secLeft-1e-6)):dur;
+ const urgent=hasRem&&secLeft>0&&secLeft<=3, pulse=urgent?(.5+.5*Math.sin(secLeft*Math.PI*2)):0;
+ const g={w,h,tY,tH,dur,hasRem,secLeft,frac,shown,urgent,pulse,hot:urgent?'#ff2d1a':THEME.timerA};
+ const k=THEME.timerSize||1,dx=(THEME.timerX||0)/100*w,dy=(THEME.timerY||0)/100*h,moved=k!==1||dx!==0||dy!==0;
+ if(moved){ctx.save();const cx0=w/2,cy0=tY+tH/2;ctx.translate(cx0+dx,cy0+dy);ctx.scale(k,k);ctx.translate(-cx0,-cy0)}
+ (TIMER_DRAW[THEME.timerLook]||TIMER_DRAW.capsule)(ctx,g);
+ if(moved)ctx.restore();
+}
+const TIMER_DRAW={
+ capsule(ctx,g){const {w,tY,tH,dur,secLeft,frac,shown,urgent,pulse,hot}=g;
+  const bR=tH*.88, gapB=tH*.5, tW=w*.6-bR*2-gapB, gW=bR*2+gapB+tW, gX=(w-gW)/2;
+  const bcx=gX+bR, bcy=tY+tH/2, tX=gX+bR*2+gapB, bw=Math.max(2,tH*.1), cap=r=>(tH+r*2)/2;
+ // outer metallic rim (+ red glow in the last 3 seconds)
+ ctx.save();
+ ctx.shadowColor=urgent?`rgba(255,40,20,${.35+.45*pulse})`:'rgba(0,0,0,.32)';ctx.shadowBlur=urgent?tH*(.7+.9*pulse):tH*.28;ctx.shadowOffsetY=urgent?0:tH*.1;
+ let rim=borderGrad(ctx,tY-bw,tY+tH+bw);
+ ctx.fillStyle=rim;roundRect(ctx,tX-bw,tY-bw,tW+bw*2,tH+bw*2,cap(bw));ctx.fill();ctx.restore();
+ // inset track
+ ctx.save();roundRect(ctx,tX,tY,tW,tH,tH/2);ctx.clip();
+ ctx.fillStyle=THEME.timerTrack;ctx.fillRect(tX,tY,tW,tH);
+ let ins=ctx.createLinearGradient(0,tY,0,tY+tH);ins.addColorStop(0,'rgba(0,0,0,.38)');ins.addColorStop(.45,'rgba(0,0,0,.08)');ins.addColorStop(1,'rgba(255,255,255,.18)');
+ ctx.fillStyle=ins;ctx.fillRect(tX,tY,tW,tH);
+ if(frac>0){
+  const fw=Math.max(tH,tW*frac);
+  let fg=ctx.createLinearGradient(0,tY,0,tY+tH);fg.addColorStop(0,urgent?'#ff6a55':THEME.timerA);fg.addColorStop(1,urgent?'#d81500':THEME.timerB);
+  ctx.fillStyle=fg;roundRect(ctx,tX,tY,fw,tH,tH/2);ctx.fill();
+  ctx.save();roundRect(ctx,tX,tY,fw,tH,tH/2);ctx.clip();
+  // glossy highlight on the upper half
+  let gl=ctx.createLinearGradient(0,tY,0,tY+tH*.55);gl.addColorStop(0,'rgba(255,255,255,.62)');gl.addColorStop(1,'rgba(255,255,255,.04)');
+  ctx.fillStyle=gl;roundRect(ctx,tX+tH*.18,tY+tH*.08,Math.max(0,fw-tH*.36),tH*.42,tH*.21);ctx.fill();
+  // moving shine band
+  const sx=tX+((secLeft*.9)%1)*(fw+tH*3)-tH*3, sg=ctx.createLinearGradient(sx,0,sx+tH*3,0);
+  sg.addColorStop(0,'rgba(255,255,255,0)');sg.addColorStop(.5,'rgba(255,255,255,.34)');sg.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=sg;ctx.fillRect(sx,tY,tH*3,tH);
+  // bottom inner shade for depth
+  let sh=ctx.createLinearGradient(0,tY+tH*.6,0,tY+tH);sh.addColorStop(0,'rgba(0,0,0,0)');sh.addColorStop(1,'rgba(0,0,0,.22)');ctx.fillStyle=sh;ctx.fillRect(tX,tY+tH*.6,fw,tH*.4);
+  ctx.restore();
+ }
+ // second ticks
+ if(dur>1&&dur<=30){ctx.fillStyle='rgba(0,0,0,.2)';for(let k=1;k<dur;k++){ctx.fillRect(tX+tW*k/dur-Math.max(.5,tH*.015),tY+tH*.2,Math.max(1,tH*.03),tH*.6)}}
+ ctx.restore();
+ // glowing tip where the bar ends
+ if(frac>0&&frac<1){const ex=tX+Math.max(tH,tW*frac);ctx.save();ctx.globalCompositeOperation='lighter';
+  let rg=ctx.createRadialGradient(ex,bcy,0,ex,bcy,tH*.9);rg.addColorStop(0,hexA(urgent?'#ff5a40':THEME.timerA,.4));rg.addColorStop(1,hexA(urgent?'#ff5a40':THEME.timerA,0));
+  ctx.fillStyle=rg;ctx.beginPath();ctx.arc(ex,bcy,tH*.9,0,Math.PI*2);ctx.fill();ctx.restore()}
+ // seconds badge: metallic ring + dark dial + progress arc + number
+ ctx.save();ctx.shadowColor=urgent?`rgba(255,40,20,${.4+.4*pulse})`:'rgba(0,0,0,.4)';ctx.shadowBlur=urgent?bR*(.6+.8*pulse):bR*.35;ctx.shadowOffsetY=urgent?0:bR*.12;
+ let br=borderGrad(ctx,bcy-bR,bcy+bR);
+ ctx.fillStyle=br;ctx.beginPath();ctx.arc(bcx,bcy,bR,0,Math.PI*2);ctx.fill();ctx.restore();
+ const dR=bR*.84;let dg=ctx.createRadialGradient(bcx,bcy-dR*.35,dR*.1,bcx,bcy,dR);dg.addColorStop(0,'#3a3a3a');dg.addColorStop(1,'#0c0c0c');
+ ctx.fillStyle=dg;ctx.beginPath();ctx.arc(bcx,bcy,dR,0,Math.PI*2);ctx.fill();
+ ctx.save();ctx.lineCap='round';ctx.lineWidth=bR*.15;ctx.strokeStyle='rgba(255,255,255,.14)';ctx.beginPath();ctx.arc(bcx,bcy,dR*.82,0,Math.PI*2);ctx.stroke();
+ if(frac>0){ctx.strokeStyle=hot;ctx.shadowColor=hot;ctx.shadowBlur=bR*.3;ctx.beginPath();ctx.arc(bcx,bcy,dR*.82,-Math.PI/2,-Math.PI/2+Math.PI*2*frac);ctx.stroke()}ctx.restore();
+ ctx.save();ctx.translate(bcx,bcy+bR*.04);const sc=1+.14*pulse;ctx.scale(sc,sc);ctx.textAlign='center';ctx.fillStyle='#fff';
+ ctx.font=`900 ${bR*(shown>=100?.7:shown>=10?.9:1.1)}px ${SP_FONT}`;ctx.fillText(String(shown),0,bR*.36*(shown>=10?.9:1));ctx.restore();
+},
+ segments(ctx,g){const {w,tY,tH,dur,frac,shown,urgent,pulse}=g;
+  const N=20, boxW=tH*1.7, gap=tH*.45, hW=w*.6-boxW-gap, gX=(w-(hW+gap+boxW))/2, hH=tH*1.1, hY=tY+tH/2-hH/2;
+  ctx.save();ctx.shadowColor=urgent?`rgba(255,40,20,${.35+.45*pulse})`:'rgba(0,0,0,.35)';ctx.shadowBlur=urgent?tH*(.6+.8*pulse):tH*.3;ctx.shadowOffsetY=urgent?0:tH*.1;
+  let hg=ctx.createLinearGradient(0,hY,0,hY+hH);hg.addColorStop(0,'#3a3a3a');hg.addColorStop(1,'#0d0d0d');ctx.fillStyle=hg;roundRect(ctx,gX,hY,hW,hH,hH*.3);ctx.fill();ctx.restore();
+  ctx.strokeStyle=hexA(THEME.timerBorder,.9);ctx.lineWidth=Math.max(1,tH*.05);roundRect(ctx,gX,hY,hW,hH,hH*.3);ctx.stroke();
+  const pad=hH*.16, sg=hH*.07, sw=(hW-pad*2-sg*(N-1))/N, sh=hH-pad*2, lit=Math.ceil(frac*N-1e-6);
+  for(let i=0;i<N;i++){const x=gX+pad+i*(sw+sg), on=i<lit;
+   if(on){const t=i/(N-1);ctx.save();let col=urgent?'#ff3b1f':THEME.timerA;ctx.shadowColor=col;ctx.shadowBlur=tH*.3;
+    let sgd=ctx.createLinearGradient(0,hY+pad,0,hY+pad+sh);sgd.addColorStop(0,urgent?'#ff7a66':THEME.timerA);sgd.addColorStop(1,urgent?'#d81500':THEME.timerB);
+    ctx.globalAlpha=(urgent&&i===lit-1)?.55+.45*pulse:1;ctx.fillStyle=sgd;roundRect(ctx,x,hY+pad,sw,sh,sw*.3);ctx.fill();
+    ctx.globalAlpha=.35;ctx.fillStyle='#fff';roundRect(ctx,x+sw*.12,hY+pad+sh*.08,sw*.76,sh*.3,sw*.2);ctx.fill();ctx.restore()}
+   else{ctx.fillStyle='rgba(255,255,255,.09)';roundRect(ctx,x,hY+pad,sw,sh,sw*.3);ctx.fill()}}
+  const bx=gX+hW+gap;ctx.save();ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=tH*.25;ctx.shadowOffsetY=tH*.08;
+  let bg=ctx.createLinearGradient(0,hY,0,hY+hH);bg.addColorStop(0,'#3a3a3a');bg.addColorStop(1,'#0d0d0d');ctx.fillStyle=bg;roundRect(ctx,bx,hY,boxW,hH,hH*.3);ctx.fill();ctx.restore();
+  ctx.strokeStyle=hexA(THEME.timerBorder,.9);ctx.lineWidth=Math.max(1,tH*.05);roundRect(ctx,bx,hY,boxW,hH,hH*.3);ctx.stroke();
+  cdText(ctx,String(shown),bx+boxW/2,hY+hH/2+hH*.04,hH*.72,urgent?'#ff6a55':'#ffffff',pulse,urgent?'#ff2d1a':THEME.timerA)},
+ ring(ctx,g){const {w,tY,tH,frac,shown,urgent,pulse,hot}=g,R=tH*1.35,cx=w/2,cy=tY+tH-R;
+  metalRing(ctx,cx,cy,R,urgent?`rgba(255,40,20,${.4+.4*pulse})`:null);
+  const dR=R*.9;let dg=ctx.createRadialGradient(cx,cy-dR*.4,dR*.1,cx,cy,dR);dg.addColorStop(0,'#3d3d3d');dg.addColorStop(1,'#0b0b0b');ctx.fillStyle=dg;ctx.beginPath();ctx.arc(cx,cy,dR,0,Math.PI*2);ctx.fill();
+  const rr=R*.7;ctx.save();ctx.lineCap='round';ctx.lineWidth=R*.17;ctx.strokeStyle='rgba(255,255,255,.12)';ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.stroke();
+  if(frac>0){let ag=ctx.createLinearGradient(cx-rr,cy-rr,cx+rr,cy+rr);ag.addColorStop(0,urgent?'#ff6a55':THEME.timerA);ag.addColorStop(1,urgent?'#d81500':THEME.timerB);ctx.strokeStyle=ag;ctx.shadowColor=hot;ctx.shadowBlur=R*.25;ctx.beginPath();ctx.arc(cx,cy,rr,-Math.PI/2,-Math.PI/2+Math.PI*2*frac);ctx.stroke()}ctx.restore();
+  cdText(ctx,String(shown),cx,cy+R*.02,R*(shown>=10?.8:1),'#ffffff',pulse);
+  ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`800 ${R*.17}px ${SP_FONT}`;ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillText('SEC',cx,cy+R*.5);ctx.restore()},
+ neon(ctx,g){const {w,tY,tH,frac,shown,urgent,pulse,hot}=g,R=tH*1.3,cx=w/2,cy=tY+tH-R,col=urgent?'#ff3b1f':THEME.timerA;
+  ctx.save();let bg=ctx.createRadialGradient(cx,cy,R*.2,cx,cy,R);bg.addColorStop(0,'rgba(10,12,20,.9)');bg.addColorStop(1,'rgba(2,3,8,.96)');ctx.fillStyle=bg;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();ctx.restore();
+  ctx.save();ctx.lineCap='round';ctx.strokeStyle=hexA(THEME.timerBorder,.75);ctx.lineWidth=R*.05;ctx.shadowColor=THEME.timerBorder;ctx.shadowBlur=R*.4;ctx.beginPath();ctx.arc(cx,cy,R*.97,0,Math.PI*2);ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.08)';ctx.shadowBlur=0;ctx.lineWidth=R*.1;ctx.beginPath();ctx.arc(cx,cy,R*.74,0,Math.PI*2);ctx.stroke();
+  if(frac>0){ctx.strokeStyle=col;ctx.lineWidth=R*.11;ctx.shadowColor=col;ctx.shadowBlur=R*(.5+.5*pulse);for(let k=0;k<2;k++){ctx.beginPath();ctx.arc(cx,cy,R*.74,-Math.PI/2,-Math.PI/2+Math.PI*2*frac);ctx.stroke()}
+   ctx.strokeStyle='#fff';ctx.lineWidth=R*.04;ctx.shadowBlur=R*.2;ctx.beginPath();ctx.arc(cx,cy,R*.74,-Math.PI/2,-Math.PI/2+Math.PI*2*frac);ctx.stroke()}ctx.restore();
+  cdText(ctx,String(shown),cx,cy+R*.03,R*(shown>=10?.72:.95),'#ffffff',pulse,col)},
+ pie(ctx,g){const {w,tY,tH,frac,shown,urgent,pulse,hot}=g,R=tH*1.3,cx=w/2,cy=tY+tH-R;
+  metalRing(ctx,cx,cy,R,urgent?`rgba(255,40,20,${.4+.4*pulse})`:null);
+  const fR=R*.88;ctx.fillStyle=THEME.timerTrack;ctx.beginPath();ctx.arc(cx,cy,fR,0,Math.PI*2);ctx.fill();
+  let ins=ctx.createRadialGradient(cx,cy,fR*.2,cx,cy,fR);ins.addColorStop(0,'rgba(255,255,255,.18)');ins.addColorStop(1,'rgba(0,0,0,.28)');ctx.fillStyle=ins;ctx.beginPath();ctx.arc(cx,cy,fR,0,Math.PI*2);ctx.fill();
+  if(frac>0){ctx.save();let wg=ctx.createRadialGradient(cx,cy,fR*.1,cx,cy,fR);wg.addColorStop(0,urgent?'#ff7a66':THEME.timerA);wg.addColorStop(1,urgent?'#d81500':THEME.timerB);ctx.fillStyle=wg;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,fR,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.max(.0001,frac));ctx.closePath();ctx.fill();
+   ctx.clip();let gl=ctx.createLinearGradient(0,cy-fR,0,cy+fR);gl.addColorStop(0,'rgba(255,255,255,.4)');gl.addColorStop(.5,'rgba(255,255,255,0)');ctx.fillStyle=gl;ctx.fillRect(cx-fR,cy-fR,fR*2,fR*2);ctx.restore()}
+  const hR=R*.46;ctx.save();ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=R*.15;ctx.shadowOffsetY=R*.05;let hg=ctx.createRadialGradient(cx,cy-hR*.4,hR*.1,cx,cy,hR);hg.addColorStop(0,'#3d3d3d');hg.addColorStop(1,'#0b0b0b');ctx.fillStyle=hg;ctx.beginPath();ctx.arc(cx,cy,hR,0,Math.PI*2);ctx.fill();ctx.restore();
+  cdText(ctx,String(shown),cx,cy+R*.02,hR*(shown>=10?.95:1.25),'#ffffff',pulse)},
+ clock(ctx,g){const {w,tY,tH,secLeft,frac,shown,urgent,pulse,hot}=g,R=tH*1.35,cx=w/2,cy=tY+tH-R;
+  metalRing(ctx,cx,cy,R,urgent?`rgba(255,40,20,${.4+.4*pulse})`:null);
+  const fR=R*.9;let fg=ctx.createRadialGradient(cx,cy-fR*.3,fR*.1,cx,cy,fR);fg.addColorStop(0,'#ffffff');fg.addColorStop(1,'#e2e2e2');ctx.fillStyle=fg;ctx.beginPath();ctx.arc(cx,cy,fR,0,Math.PI*2);ctx.fill();
+  const ang=-Math.PI/2+Math.PI*2*(1-frac);
+  if(frac>0){ctx.fillStyle=hexA(urgent?'#ff2d1a':THEME.timerA,.22);ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,fR*.93,ang,Math.PI*1.5);ctx.closePath();ctx.fill()}
+  ctx.save();ctx.strokeStyle='#222';ctx.lineCap='round';for(let i=0;i<60;i++){const a=i/60*Math.PI*2-Math.PI/2,big=i%5===0,r1=fR*(big?.76:.84),r2=fR*.92;ctx.lineWidth=fR*(big?.045:.02);ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);ctx.lineTo(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.fillStyle='#222';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`800 ${fR*.17}px ${SP_FONT}`;[['12',0,-.6],['3',.6,0],['6',0,.6],['9',-.6,0]].forEach(([t,dx,dy])=>ctx.fillText(t,cx+dx*fR,cy+dy*fR));ctx.restore();
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(ang+Math.PI/2);ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=fR*.08;ctx.shadowOffsetY=fR*.03;ctx.strokeStyle=hot;ctx.lineCap='round';ctx.lineWidth=fR*.055;ctx.beginPath();ctx.moveTo(0,fR*.2);ctx.lineTo(0,-fR*.8);ctx.stroke();
+  ctx.fillStyle=hot;ctx.beginPath();ctx.arc(0,0,fR*.1,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(0,0,fR*.035,0,Math.PI*2);ctx.fill();ctx.restore();
+  cdText(ctx,String(shown),cx,cy+fR*.42,fR*.3,urgent?'#d81500':'#222',pulse)},
+ stopwatch(ctx,g){const {w,tY,tH,dur,secLeft,frac,shown,urgent,pulse,hot}=g,R=tH*1.25,cx=w/2,cy=tY+tH-R;
+  ctx.save();let cg=ctx.createLinearGradient(cx-R*.2,0,cx+R*.2,0);cg.addColorStop(0,'#8e8e8e');cg.addColorStop(.5,'#f2f2f2');cg.addColorStop(1,'#8e8e8e');ctx.fillStyle=cg;roundRect(ctx,cx-R*.17,cy-R-R*.3,R*.34,R*.3,R*.06);ctx.fill();roundRect(ctx,cx-R*.28,cy-R-R*.36,R*.56,R*.12,R*.05);ctx.fill();
+  ctx.translate(cx+R*.72,cy-R*.72);ctx.rotate(Math.PI/4);roundRect(ctx,-R*.1,-R*.2,R*.2,R*.2,R*.04);ctx.fill();ctx.restore();
+  metalRing(ctx,cx,cy,R,urgent?`rgba(255,40,20,${.4+.4*pulse})`:null);
+  const dR=R*.88;let dg=ctx.createRadialGradient(cx,cy-dR*.4,dR*.1,cx,cy,dR);dg.addColorStop(0,'#383838');dg.addColorStop(1,'#0a0a0a');ctx.fillStyle=dg;ctx.beginPath();ctx.arc(cx,cy,dR,0,Math.PI*2);ctx.fill();
+  const n=dur<=30?dur*2:60;ctx.save();ctx.lineCap='round';for(let i=0;i<n;i++){const a=i/n*Math.PI*2-Math.PI/2,big=i%2===0||n===60,r1=dR*(big?.8:.86),r2=dR*.93,passed=(i/n)<(1-frac)-1e-6;ctx.strokeStyle=passed?'rgba(255,255,255,.25)':(urgent&&i/n>=1-3/dur?'#ff5a40':'rgba(255,255,255,.9)');ctx.lineWidth=dR*(big?.045:.025);ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);ctx.lineTo(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2);ctx.stroke()}ctx.restore();
+  const ang=-Math.PI/2+Math.PI*2*(1-frac);
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(ang+Math.PI/2);ctx.shadowColor=hot;ctx.shadowBlur=dR*.15;ctx.strokeStyle=hot;ctx.lineCap='round';ctx.lineWidth=dR*.05;ctx.beginPath();ctx.moveTo(0,dR*.16);ctx.lineTo(0,-dR*.72);ctx.stroke();ctx.fillStyle=hot;ctx.beginPath();ctx.arc(0,0,dR*.09,0,Math.PI*2);ctx.fill();ctx.restore();
+  cdText(ctx,String(shown),cx,cy+dR*.42,dR*.42,'#ffffff',pulse)},
+ orb(ctx,g){const {w,tY,tH,secLeft,frac,shown,urgent,pulse,hot}=g,R=tH*1.05,cx=w/2,cy=tY+tH-R*1.2,c1=urgent?'#ff5a40':THEME.timerA,c2=urgent?'#d81500':THEME.timerB;
+  ctx.save();ctx.lineWidth=R*.05;for(let k=0;k<3;k++){const ph=((secLeft%1)+k/3)%1;ctx.globalAlpha=(1-ph)*.4;ctx.strokeStyle=hot;ctx.beginPath();ctx.arc(cx,cy,R*(1.05+ph*.55),0,Math.PI*2);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.shadowColor=hot;ctx.shadowBlur=R*(.7+.6*pulse);let og=ctx.createRadialGradient(cx-R*.3,cy-R*.35,R*.08,cx,cy,R);og.addColorStop(0,'#ffffff');og.addColorStop(.25,c1);og.addColorStop(1,c2);ctx.fillStyle=og;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();ctx.restore();
+  ctx.save();ctx.globalAlpha=.45;let hl=ctx.createLinearGradient(0,cy-R,0,cy);hl.addColorStop(0,'#fff');hl.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=hl;ctx.beginPath();ctx.ellipse(cx-R*.12,cy-R*.52,R*.55,R*.32,-.35,0,Math.PI*2);ctx.fill();ctx.restore();
+  if(frac>0){ctx.save();ctx.lineCap='round';ctx.lineWidth=R*.09;ctx.strokeStyle=THEME.timerBorder;ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=R*.1;ctx.beginPath();ctx.arc(cx,cy,R*1.0,-Math.PI/2,-Math.PI/2+Math.PI*2*frac);ctx.stroke();ctx.restore()}
+  cdText(ctx,String(shown),cx,cy+R*.04,R*(shown>=10?.82:1.08),'#ffffff',pulse,'rgba(0,0,0,.45)')},
+ flatbar(ctx,g){const {w,tY,tH,frac,urgent,pulse}=g,tW=w*.6,tX=(w-tW)/2,bw=Math.max(2,tH*.09);
+  ctx.save();ctx.shadowColor=urgent?`rgba(255,40,20,${.3+.4*pulse})`:'rgba(0,0,0,.25)';ctx.shadowBlur=urgent?tH*(.5+.7*pulse):tH*.2;ctx.shadowOffsetY=urgent?0:tH*.08;ctx.fillStyle=THEME.timerBorder;roundRect(ctx,tX-bw,tY-bw,tW+bw*2,tH+bw*2,(tH+bw*2)/2);ctx.fill();ctx.restore();
+  ctx.fillStyle=THEME.timerTrack;roundRect(ctx,tX,tY,tW,tH,tH/2);ctx.fill();
+  if(frac>0){const fw=Math.max(tH,tW*frac);ctx.save();roundRect(ctx,tX,tY,tW,tH,tH/2);ctx.clip();
+   let bg=ctx.createLinearGradient(0,tY,0,tY+tH);bg.addColorStop(0,urgent?'#ff4a30':THEME.timerA);bg.addColorStop(1,urgent?'#e01a00':THEME.timerB);ctx.fillStyle=bg;roundRect(ctx,tX,tY,fw,tH,tH/2);ctx.fill();
+   // faint chevron highlights like a printed gradient
+   ctx.save();roundRect(ctx,tX,tY,fw,tH,tH/2);ctx.clip();ctx.fillStyle='rgba(255,255,255,.07)';
+   for(const f of [.18,.82]){const x=tX+fw*f;ctx.beginPath();ctx.moveTo(x-tH*1.1,tY+tH);ctx.lineTo(x,tY);ctx.lineTo(x+tH*1.1,tY+tH);ctx.closePath();ctx.fill()}ctx.restore();ctx.restore()}},
+ bold(ctx,g){const {w,tY,tH,frac,shown,urgent,pulse,hot}=g,R=tH*1.45,cx=w/2,cy=tY+tH-R+R*.12,ink=urgent?'#d81500':(THEME.timerBorder!=='#ffffff'?THEME.timerBorder:(isLight(THEME.bg)?'#000000':'#ffffff')),inv=isLight(THEME.bg)?'#ffffff':'#000000';
+  ctx.save();ctx.fillStyle=ink;
+  // crown
+  roundRect(ctx,cx-R*.08,cy-R*1.12,R*.16,R*.2,0);ctx.fill();roundRect(ctx,cx-R*.26,cy-R*1.32,R*.52,R*.22,R*.05);ctx.fill();
+  // ring
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.arc(cx,cy,R*.8,0,Math.PI*2,true);ctx.fill('evenodd');
+  const el=Math.PI*2*(1-frac),a0=-Math.PI/2;
+  const wedge=()=>{ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R*.7,a0,a0+el);ctx.closePath()};
+  if(el>0.001){wedge();ctx.fill()}
+  const sz=R*(shown>=10?.85:1.1);ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`900 ${sz}px ${SP_FONT}`;
+  const sc=1+.1*pulse;ctx.save();ctx.translate(cx,cy+R*.13);ctx.scale(sc,sc);ctx.fillStyle=ink;ctx.fillText(String(shown),0,0);ctx.restore();
+  // where the wedge and the number overlap the number flips colour
+  if(el>0.001){ctx.save();wedge();ctx.clip();ctx.translate(cx,cy+R*.13);ctx.scale(sc,sc);ctx.fillStyle=inv;ctx.fillText(String(shown),0,0);ctx.restore()}
+  ctx.restore()}
+};
+function createTensionSound(ctx,dest,duration){ try{ return scheduleCountdown(ctx,dest,ctx.currentTime,duration); }catch(e){ return null } }
+function startTensionPreview(dur){ stopTensionPreview(); try{ previewAudioCtx=previewAudioCtx||new (window.AudioContext||window.webkitAudioContext)(); previewAudioCtx.resume(); previewTension=scheduleCountdown(previewAudioCtx,null,previewAudioCtx.currentTime,dur); }catch(e){} }
+function stopTensionPreview(){ try{ previewTension&&previewTension.stop(); }catch(e){} previewTension=null; }
+// Book-page turn for the on-screen preview (page sweeps from the right towards the left)
+function openPagePreview(){ const s=$('screen'); if(!s)return; s.classList.remove('pageturn'); void s.offsetWidth; s.classList.add('pageturn'); setTimeout(()=>{ try{s.classList.remove('pageturn')}catch(e){} },950); }
+// Settings button: hear the countdown tension + time-up + reveal sounds on this device
+const __tsBtn=$('testSounds');
+if(__tsBtn)__tsBtn.onclick=()=>{ try{ previewAudioCtx=previewAudioCtx||new (window.AudioContext||window.webkitAudioContext)(); previewAudioCtx.resume(); const t=previewAudioCtx.currentTime; scheduleCountdown(previewAudioCtx,null,t,2.8); updateSoundStatus(); toneNodes(previewAudioCtx,null,392,t+3.0,.18,.19,'triangle'); toneNodes(previewAudioCtx,null,311,t+3.11,.28,.17,'triangle'); toneNodes(previewAudioCtx,null,880,t+3.35,.14,.20,'sine'); toneNodes(previewAudioCtx,null,1175,t+3.44,.20,.17,'sine'); toneNodes(previewAudioCtx,null,1568,t+3.53,.26,.10,'sine'); }catch(e){} };
+// ===== TEMPLATE THEME — everything the video looks like. Defaults reproduce the original Yellow/Black look. =====
+const THEME_DEFAULT={font:'League Spartan',bg:'#e6e6e6',
+ headerBg:'#1e1b08',headerDesign:'bar',headerSize:'medium',headerShow:'show',headerNum:'#ffff00',headerTot:'#ffffff',headerText:'#ffffff',headerStroke:'#000000',outHeader:'on',
+ qText:'#000000',qStroke:'#ffffff',outQ:'on',qSize:'medium',
+ optFill:'#050505',optText:'#ffffff',optStroke:'#000000',outOpt:'on',optShape:'pill',optSize:'medium',optCount:'4',
+ badgeFill:'#ffff00',badgeText:'#000000',badgeStroke:'#000000',outBadge:'off',correctFill:'#16a34a',
+ timerA:'#ff4a14',timerB:'#f02a00',timerTrack:'#d9d9d9',timerLook:'capsule',timerBorder:'#ffffff',timerX:0,timerY:0,timerSize:1};
+const SIZE_MUL={small:.85,medium:1,large:1.18};
+const FONT_CHOICES=[['League Spartan','League Spartan (default)'],['Bebas Neue','Bebas Neue'],['Anton','Anton'],['Oswald','Oswald'],['Montserrat','Montserrat'],['Poppins','Poppins'],['Lilita One','Lilita One'],['Baloo 2','Baloo 2'],['Fredoka','Fredoka'],['Rubik','Rubik']];
+const THEME_ENUMS={headerDesign:['bar','round','stripe'],headerSize:['small','medium','large'],headerShow:['show','hide'],outHeader:['on','off'],outQ:['on','off'],outOpt:['on','off'],outBadge:['on','off'],qSize:['small','medium','large'],optShape:['pill','rounded','square','none'],optCount:['2','3','4'],optSize:['small','medium','large'],timerLook:['capsule','segments','ring','neon','pie','clock','stopwatch','orb','flatbar','bold'],font:FONT_CHOICES.map(f=>f[0])};
+// Only known keys, valid #rrggbb colours and listed values survive — a template file can never inject anything else.
+const THEME_NUM={timerX:[-45,45],timerY:[-60,40],timerSize:[.5,2]};
+function sanitizeTheme(t){const out={...THEME_DEFAULT};if(!t||typeof t!=='object')return out;for(const k of Object.keys(THEME_DEFAULT)){const v=t[k];if(THEME_NUM[k]){if(typeof v==='number'&&isFinite(v))out[k]=Math.round(Math.max(THEME_NUM[k][0],Math.min(THEME_NUM[k][1],v))*100)/100}else if(THEME_ENUMS[k]){if(THEME_ENUMS[k].includes(v))out[k]=v}else if(typeof v==='string'&&/^#[0-9a-f]{6}$/i.test(v))out[k]=v.toLowerCase()}return out}
+let THEME={...THEME_DEFAULT};
+let SP_FONT="'League Spartan','Arial Black',Arial,sans-serif";
+function setTheme(t){THEME=sanitizeTheme(t);SP_FONT="'"+THEME.font+"','Arial Black',Arial,sans-serif"}
+function hexA(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`}
+function isLight(hex){const n=parseInt(hex.slice(1),16);return (0.299*(n>>16&255)+0.587*(n>>8&255)+0.114*(n&255))>140}
+function footCol(){return isLight(THEME.bg)?'rgba(0,0,0,0.55)':'rgba(255,255,255,0.65)'}
+function drawHeaderShape(ctx,w,hh,h){ctx.fillStyle=THEME.headerBg;const d=THEME.headerDesign;
+ if(d==='round'){const r=Math.min(hh*.35,h*.04);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(w,0);ctx.lineTo(w,hh-r);ctx.arcTo(w,hh,w-r,hh,r);ctx.lineTo(r,hh);ctx.arcTo(0,hh,0,hh-r,r);ctx.closePath();ctx.fill()}
+ else ctx.fillRect(0,0,w,hh);
+ if(d==='stripe'){ctx.fillStyle=THEME.headerNum;ctx.fillRect(0,hh,w,Math.max(3,h*.008))}}
+function drawBadge(ctx,cx,cy,cr,boxH){ctx.beginPath();if(THEME.optShape==='pill')ctx.arc(cx,cy,cr,0,Math.PI*2);else roundRect(ctx,cx-cr,cy-cr,cr*2,cr*2,THEME.optShape==='rounded'?cr*.38:cr*.14);ctx.fillStyle=THEME.badgeFill;ctx.fill();ctx.lineWidth=Math.max(2,boxH*.05);ctx.strokeStyle=THEME.badgeStroke;ctx.stroke()}
+const FONT_FILES={'League Spartan':['LeagueSpartan',[300,700,800]],'Bebas Neue':['BebasNeue',[400]],'Anton':['Anton',[400]],'Oswald':['Oswald',[300,700]],'Montserrat':['Montserrat',[300,700,800]],'Poppins':['Poppins',[300,600,800]],'Lilita One':['LilitaOne',[400]],'Baloo 2':['Baloo2',[400,800]],'Fredoka':['Fredoka',[300,600,700]],'Rubik':['Rubik',[300,600,800]]};
+const FONT_DONE=new Set();
+async function ensureFonts(){
+ const fam=THEME.font,spec=FONT_FILES[fam];let ok=false;
+ try{
+  if(spec&&window.FontFace){
+   await Promise.all(spec[1].map(async w=>{const key=fam+'|'+w;if(FONT_DONE.has(key))return;
+    const ff=new FontFace(fam,"url('fonts/"+spec[0]+"-"+w+".woff2') format('woff2')",{weight:String(w),style:'normal'});
+    const loaded=await ff.load();document.fonts.add(loaded);FONT_DONE.add(key)}));
+  }
+ }catch(e){}
+ try{const rs=await Promise.all([300,400,600,700,800,900].map(w=>document.fonts.load(w+" 60px '"+fam+"'")));ok=rs.some(r=>r&&r.length)}catch(e){}
+ const el=$('fontStatus');if(el)el.textContent=ok?('✓ Font "'+fam+'" load ho gaya — preview aur video me yehi lage ga.'):(FONT_DONE.size?('✓ Font "'+fam+'" load ho gaya (files se) — preview aur video me yehi lage ga.'):('⚠ Font "'+fam+'" load nahi ho saka — public/fonts folder maujood hai ya nahi, check karein.'));
+ return ok||FONT_DONE.size>0;
+}
+ensureFonts().then(()=>{try{renderPreview()}catch(e){}});
+async function updateMp4Badge(){const b=$('mp4Badge');if(!b)return;try{const r=$('ratio').value.split('/').map(Number);const Q=parseInt(($('exportQuality')||{}).value||'1080',10);const dims=(r[0]===16&&r[1]===9)?(Q===1080?[1920,1080]:Q===720?[1280,720]:[854,480]):(r[0]===9)?(Q===1080?[1080,1920]:Q===720?[720,1280]:[480,854]):(Q===1080?[1080,1080]:Q===720?[720,720]:[480,480]);const sup=await detectMp4Support(dims[0],dims[1]);if(sup.ok){const modeLabel = sup.mode==='webcodecs'?'WebCodecs':sup.mode==='native'?'Native Hardware':'Recorder';b.textContent='MP4 Direct: ✓ Supported ('+modeLabel+') · '+dims[0]+'×'+dims[1]+' · '+(($('exportFps')||{}).value||'24')+' fps — video seedha MP4 me download hogi';b.style.color='#3ddc84'}else{b.textContent='MP4 Direct: ✗ Is browser me supported nahi — Chrome ko update karke dobara try karein';b.style.color='#ff7b72'}}catch(e){b.textContent='MP4 Direct: check nahi ho saka'}}
+updateMp4Badge();
+['ratio','exportQuality','exportFps'].forEach(id=>{const el=$(id);if(el)el.addEventListener('change',updateMp4Badge)});
+function spText(ctx,txt,x,y,fill,stroke,lw,maxW){ctx.lineJoin='round';if(stroke){ctx.lineWidth=lw;ctx.strokeStyle=stroke;ctx.strokeText(txt,x,y,maxW)}ctx.fillStyle=fill;ctx.fillText(txt,x,y,maxW)}
+function spWrap(ctx,text,maxW){let words=text.split(/\s+/),lines=[],line='';for(let wd of words){let t=line?line+' '+wd:wd;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=wd}else line=t}if(line)lines.push(line);return lines}
+// Recreates the Canva sample template: dark header, grey body, black pill options with yellow letter badges.
+function drawSpanish(ctx,w,h,q,idx,total,remaining,reveal,anim){anim=anim||{enter:1};
+ const portrait=h>w*1.1, sq=!portrait&&Math.abs(w-h)<5;
+ ctx.clearRect(0,0,w,h);ctx.fillStyle=THEME.bg;ctx.fillRect(0,0,w,h);
+ // header bar + soft shadow
+ const showHdr=THEME.headerShow!=='hide';
+ const hh=showHdr?h*(portrait?.1:.165)*SIZE_MUL[THEME.headerSize]:0;
+ const hStroke=THEME.outHeader==='off'?null:THEME.headerStroke;
+ if(showHdr){
+ let sg=ctx.createLinearGradient(0,hh,0,hh+h*.09);sg.addColorStop(0,'rgba(0,0,0,.45)');sg.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=sg;ctx.fillRect(0,hh,w,h*.09);
+ drawHeaderShape(ctx,w,hh,h);
+ ctx.textBaseline='alphabetic';ctx.textAlign='left';
+ const hfs=hh*.62, by=hh*.7, lw=Math.max(2,hfs*.07);
+ const num=String(idx+1), tot='/'+total;
+ ctx.font=`800 ${hfs}px ${SP_FONT}`;
+ let x=w*.035;
+ spText(ctx,num,x+hfs*.05,by+hfs*.06,'#000',null,0);   // drop shadow
+ spText(ctx,num,x,by,THEME.headerNum,hStroke,lw);
+ x+=ctx.measureText(num).width+hfs*.08;
+ ctx.font=`300 ${hfs*.95}px ${SP_FONT}`;
+ spText(ctx,tot,x,by,THEME.headerTot,hStroke,lw);
+ x+=ctx.measureText(tot).width+w*.03;
+ ctx.font=`800 ${hfs*.9}px ${SP_FONT}`;
+ const ht=($('headerText')?$('headerText').value.trim():'')||'GUESS THE ANSWER';
+ spText(ctx,ht.toUpperCase(),x,by,THEME.headerText,hStroke,lw,w-x-w*.02);
+ }
+ // layout of options (quantity from template: 2 / 3 / 4 — default 4)
+ const optCount=parseInt(THEME.optCount)||4;
+ const cols=portrait?1:2, rows=portrait?optCount:Math.ceil(optCount/2);
+ const gapX=w*.025, gapY=h*(portrait?.02:.03);
+ const sideM=w*(portrait?.07:.05);
+ const boxW=(w-sideM*2-gapX*(cols-1))/cols;
+ const boxH=h*(portrait?.085:sq?.11:.125)*SIZE_MUL[THEME.optSize];const optRad=THEME.optShape==='pill'?boxH/2:THEME.optShape==='rounded'?boxH*.22:boxH*.06;
+ const optTop=h-(rows*boxH+(rows-1)*gapY)-h*(portrait?.08:.065);
+ // question (auto-fit between header and options)
+ const tH=h*(portrait?.04:.055), tY=optTop-h*.03-tH;
+ const qTop=hh+h*.06, qBot=tY-h*.025, qMaxW=w*.88;
+ let fs=w*(portrait?.075:.062)*SIZE_MUL[THEME.qSize], lines;
+ ctx.textAlign='center';
+ for(;fs>12;fs-=2){ctx.font=`800 ${fs}px ${SP_FONT}`;lines=spWrap(ctx,q.question.toUpperCase(),qMaxW);if(lines.length*fs*1.12<=qBot-qTop)break}
+ const lh=fs*1.12, blockH=lines.length*lh, y0=qTop+(qBot-qTop-blockH)/2+fs*.85;
+ ctx.save();ctx.globalAlpha*=Math.max(0,Math.min(1,anim.enter));ctx.translate(0,(1-Math.max(0,Math.min(1,anim.enter)))*h*0.03);lines.forEach((l,i)=>spText(ctx,l,w/2,y0+i*lh,THEME.qText,THEME.outQ==='off'?null:THEME.qStroke,Math.max(2,fs*.05),qMaxW));ctx.restore();
+ // options
+ q.options.slice(0,optCount).forEach((o,i)=>{
+  const c=portrait?0:i%2, r=portrait?i:Math.floor(i/2);
+  let bx=sideM+c*(boxW+gapX); const by2=optTop+r*(boxH+gapY);
+  if(!portrait&&optCount===3&&i===2)bx=sideM+(boxW+gapX)/2; // 3 options: C sits centred below A and B
+  const ok=reveal&&i===q.correct, dim=reveal&&i!==q.correct;const oi=Math.max(0,Math.min(1,anim.enter*1.7-i*0.22));ctx.save();ctx.globalAlpha*=oi;const ccx=bx+boxW/2,ccy=by2+boxH/2;ctx.translate(ccx,ccy);ctx.scale(Math.max(.05,oi),Math.max(.05,oi));ctx.translate(-ccx,-ccy);
+  const noShape=THEME.optShape==='none';
+  if(!noShape){ctx.save();ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=boxH*.12;ctx.shadowOffsetY=boxH*.06;
+  ctx.fillStyle=ok?THEME.correctFill:THEME.optFill;roundRect(ctx,bx,by2,boxW,boxH,optRad);ctx.fill();ctx.restore();
+  }
+  const cr=boxH*.42, cx=bx+boxH*.5, cy=by2+boxH/2;
+  if(!noShape)drawBadge(ctx,cx,cy,cr,boxH);
+  ctx.textAlign='center';ctx.font=`800 ${cr*1.25}px ${SP_FONT}`;
+  spText(ctx,ok?'✓':'ABCD'[i],cx,cy+cr*.43,noShape?(ok?THEME.correctFill:THEME.optText):THEME.badgeText,THEME.outBadge==='off'?null:THEME.badgeStroke,Math.max(1,cr*.09));
+  ctx.textAlign='center';
+  let tx=bx+boxH+ (boxW-boxH)/2-boxH*.05, tw=boxW-boxH*1.35;
+  let ofs=boxH*.42;ctx.font=`800 ${ofs}px ${SP_FONT}`;
+  while(ofs>10&&ctx.measureText(o.toUpperCase()).width>tw){ofs-=1;ctx.font=`800 ${ofs}px ${SP_FONT}`}
+  spText(ctx,o.toUpperCase(),tx,cy+ofs*.36,(noShape&&ok)?THEME.correctFill:THEME.optText,THEME.outOpt==='off'?null:THEME.optStroke,Math.max(1,ofs*.06),tw);ctx.restore();
+ });
+ // channel name (left), maker credit (centre) and counter (right) along the bottom edge
+ ctx.save();ctx.fillStyle=footCol();ctx.font=`300 ${Math.max(11,h*0.02)}px ${SP_FONT}`;ctx.textAlign='left';ctx.fillText(($('channelName').value.trim()||$('projectTitle').value||'').toUpperCase(),w*0.035,h*0.982,w*0.3);
+ ctx.textAlign='right';ctx.fillText(`${idx+1} / ${total}`,w*0.965,h*0.982);ctx.restore();
+ drawTimerLook(ctx,w,h,tY,tH,remaining);
+}
+// Book-page turn (export): the previous page — snapshotted on `snap` — is anchored at
+// the LEFT spine and its free edge sweeps from the RIGHT towards the LEFT, revealing
+// the new question underneath (already drawn by the scene). Past halfway you start
+// to see the pale back of the turning page.
+function drawPageTurn(ctx,w,h,p,snap){
+ if(p>=1||!snap)return;
+ const e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+ const pw=w*(1-e); if(pw<=1)return;
+ let sh=ctx.createLinearGradient(pw,0,pw+w*0.05,0); sh.addColorStop(0,'rgba(0,0,0,0.30)'); sh.addColorStop(1,'rgba(0,0,0,0)');
+ ctx.fillStyle=sh; ctx.fillRect(pw,0,w*0.05,h);
+ ctx.save(); ctx.beginPath(); ctx.rect(0,0,pw,h); ctx.clip(); ctx.scale(pw/w,1); ctx.drawImage(snap,0,0); ctx.restore();
+ if(p>0.5){ ctx.save(); ctx.beginPath(); ctx.rect(0,0,pw,h); ctx.clip(); ctx.fillStyle=`rgba(240,235,225,${Math.min(0.85,(p-0.5)*1.4)})`; ctx.fillRect(0,0,pw,h); ctx.restore(); }
+ let fg=ctx.createLinearGradient(Math.max(0,pw-w*0.06),0,pw,0); fg.addColorStop(0,'rgba(0,0,0,0)'); fg.addColorStop(1,'rgba(0,0,0,0.38)');
+ ctx.fillStyle=fg; ctx.fillRect(Math.max(0,pw-w*0.06),0,Math.min(pw,w*0.06),h);
+ ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.fillRect(pw-2,0,2,h);
+}
+// Cover page — shown on the very first page turn of the video.
+function drawPreviewCanvas(reveal,remaining){
+ const cv=$('pvCanvas');if(!cv||$('timerStyle').value!=='spanish')return;
+ const r=$('ratio').value.split('/').map(Number);const W=r[0]===9?540:r[0]===1?720:1280,H=r[1]===16?960:r[0]===1?720:720;
+ if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
+ const q=questions[current]||{question:'Add your first question to begin',options:['Option A','Option B','Option C','Option D'],correct:0};
+ drawSpanish(cv.getContext('2d'),W,H,q,Math.max(0,current),Math.max(questions.length,1),remaining,reveal);
+}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+// ===== v10 DIRECT MP4 EXPORT — no WebM, no conversion step, ever. =====
+// Path 1 (WebCodecs): frames are encoded straight to H.264/MP4 and the whole audio
+// track is rendered offline first, so every sound is baked in and verified.
+// Path 2 (fallback): the browser's own MP4 recorder, on devices that offer it.
+async function detectMp4Support(W,H){
+ try{
+  if(('VideoEncoder' in window)&&window.Mp4Muxer&&('AudioEncoder' in window)){
+   let vs = null;
+   for (const vc of ['avc1.640028', 'avc1.4d401f', 'avc1.42e01f']) {
+    const res = await VideoEncoder.isConfigSupported({codec:vc, width:W, height:H, bitrate:10000000, framerate:30, avc:{format:'avc'}}).catch(()=>({supported:false}));
+    if (res.supported) { vs = { supported: true, codec: vc }; break; }
+   }
+   if(vs && vs.supported){
+    for(const c of ['mp4a.40.2','opus']){
+     const as=await AudioEncoder.isConfigSupported({codec:c,sampleRate:48000,numberOfChannels:2,bitrate:192000}).catch(()=>({supported:false}));
+     if(as.supported) return {ok:true, mode:'webcodecs', vcodec:vs.codec, audioCodec:c};
+    }
+   }
+  }
+ }catch(e){}
+ if(window.AndroidBridge && window.AndroidBridge.initNativeExport) return {ok:true, mode:'native'};
+ if(recorderMp4Mime()) return {ok:true, mode:'recorder'};
+ return {ok:false, mode:''};
+}
+function recorderMp4Mime(){ if(!('MediaRecorder' in window))return null; return ['video/mp4;codecs=avc1.640028,mp4a.40.2','video/mp4;codecs=avc1,mp4a','video/mp4'].find(t=>{try{return MediaRecorder.isTypeSupported(t)}catch(e){return false}})||null }
+function isWithoutNarration(){
+ const r=document.querySelector('input[name="narrationMode"]:checked');
+ return r && r.value==='without';
+}
+function buildTimeline(voiceBufs,timerD,answerBufs=[],withNarration=true){ return QuizTimeline.build(questions,voiceBufs,timerD,answerBufs,withNarration); }
+async function renderAudioTrack(timeline,voiceBufs,answerBufs=[],withNarration=true){
+ const sr=48000,total=timeline.total;
+ const oc=new OfflineAudioContext(2,Math.max(1,Math.ceil(total*sr)),sr);
+ for(const seg of timeline.segs){
+  if(withNarration && ((seg.type==='voice'&&voiceBufs[seg.i])||(seg.type==='answer'&&answerBufs[seg.i]))){
+   const s=oc.createBufferSource(); s.buffer=seg.type==='answer'?answerBufs[seg.i]:voiceBufs[seg.i]; s.connect(oc.destination); s.start(seg.start);
+  }
+  if(seg.type==='count'){ scheduleCountdown(oc,oc.destination,seg.start,seg.dur); }
+  if(seg.type==='reveal'){
+   toneNodes(oc,oc.destination,392,seg.start,.18,.19,'triangle');
+   toneNodes(oc,oc.destination,311,seg.start+.11,.28,.17,'triangle');
+   toneNodes(oc,oc.destination,880,seg.start+.22,.14,.20,'sine');
+   toneNodes(oc,oc.destination,1175,seg.start+.31,.20,.17,'sine');
+   toneNodes(oc,oc.destination,1568,seg.start+.40,.26,.10,'sine');
+  }
+ }
+ const buf=await oc.startRendering();
+ let ok=null; const cs=timeline.segs.find(s=>s.type==='count');
+ if(cs&&cdHasSound()){ const d=buf.getChannelData(0); const a=Math.floor(cs.start*sr),b=Math.min(d.length,Math.floor((cs.start+(cdBuf()?Math.min(cs.dur,cdBuf().duration):cs.dur))*sr)); let s=0,n=0; for(let i=a;i<b;i+=8){ s+=d[i]*d[i]; n++ } ok=Math.sqrt(s/Math.max(1,n))>0.002; }
+ return {buf,ok};
+}
+window.__exportStop=false;
+setInterval(()=>{ const b=$('exportBtn'),s=$('stopExportBtn'); if(b&&s) s.style.display=b.disabled?'':'none'; },300);
+$('stopExportBtn').onclick=()=>{ window.__exportStop=true; $('exportStatus').textContent='Export roki ja rahi hai\u2026'; if($('exportOpStatus')) $('exportOpStatus').textContent='Stopping export…'; };
+
+$('exportBtn').onclick=async()=>{
+ await COUNTDOWN_READY;
+ if(!questions.length){alert('Add questions first.');return}
+ let btn=$('exportBtn'); btn.disabled=true; $('exportStatus').textContent='Preparing export…'; window.__exportStop=false;
+ const expProg = $('exportProgressContainer');
+ if(expProg) expProg.style.display='block';
+ if($('exportOpStatus')) $('exportOpStatus').textContent='Preparing export…';
+ if($('exportPercent')) $('exportPercent').textContent='0%';
+ if($('exportProgressFill')) $('exportProgressFill').style.width='0%';
+ if($('exportProgressDetails')) $('exportProgressDetails').textContent='Initializing…';
+ logLiveEvent('Export rendering started.', 'info');
+
+ window.__tingluExporting=true; window.__wlLock=null; try{ if(navigator.wakeLock) window.__wlLock=await navigator.wakeLock.request('screen'); }catch(e){} try{ if(window.AndroidBridge&&AndroidBridge.setKeepScreenOn) AndroidBridge.setKeepScreenOn(true); }catch(e){}
+ try{
+  await ensureFonts();
+  const withoutNarration = isWithoutNarration();
+  const ratio=$('ratio').value.split('/').map(Number);
+  const Q=parseInt(($('exportQuality')||{}).value||'1080',10);
+  const FPSSEL=parseInt(($('exportFps')||{}).value||'24',10);
+  const dims=(ratio[0]===16&&ratio[1]===9)?(Q===1080?[1920,1080]:Q===720?[1280,720]:[854,480]):(ratio[0]===9)?(Q===1080?[1080,1920]:Q===720?[720,1280]:[480,854]):(Q===1080?[1080,1080]:Q===720?[720,720]:[480,480]);
+  const W=dims[0],H=dims[1];
+  const timerD=+$('timerDuration').value;
+  const decodeCtx=window.__tingluDecodeCtx||(window.__tingluDecodeCtx=new (window.AudioContext||window.webkitAudioContext)()); if(decodeCtx.state==='suspended'){ try{ await decodeCtx.resume(); }catch(e){} }
+  const voiceBufs=[],answerBufs=[];
+  if(!withoutNarration){
+   for(let qi=0;qi<questions.length;qi++){
+    const q=questions[qi];
+    if(!q.audioData||!q.answerAudioData) throw new Error('Narration missing for question '+(qi+1)+'. Generate narration first or switch to "Without Narration".');
+    try{
+     const ab=await (await fetch(q.audioData)).arrayBuffer();
+     const dec=await decodeCtx.decodeAudioData(ab);
+     voiceBufs.push(dec);
+     const aab=await (await fetch(q.answerAudioData)).arrayBuffer();
+     const adec=await decodeCtx.decodeAudioData(aab);
+     answerBufs.push(adec);
+    }catch(e){ throw new Error('Narration audio for question '+(qi+1)+' could not be decoded: '+e.message); }
+   }
+  }
+  const timeline=buildTimeline(voiceBufs,timerD,answerBufs,!withoutNarration);
+  const totalFrames=Math.round(timeline.total*FPSSEL);
+
+  $('exportStatus').textContent='Rendering audio track…';
+  if($('exportOpStatus')) $('exportOpStatus').textContent='Rendering audio track…';
+  if($('exportPercent')) $('exportPercent').textContent='5%';
+  if($('exportProgressFill')) $('exportProgressFill').style.width='5%';
+
+  const rendered=await renderAudioTrack(timeline,voiceBufs,answerBufs,!withoutNarration);
+  const pcmBuf=rendered.buf;
+  const channel0=pcmBuf.getChannelData(0);
+  const sampleCount=channel0.length;
+
+  const sup = await detectMp4Support(W,H);
+  if (sup.ok && sup.mode === 'webcodecs') {
+   $('exportStatus').textContent = 'Starting fast WebCodecs video & audio encoder…';
+   if($('exportOpStatus')) $('exportOpStatus').textContent = 'WebCodecs GPU encoder active…';
+
+   let target = new Mp4Muxer.ArrayBufferTarget();
+   const muxer = new Mp4Muxer.Muxer({
+    target,
+    video: { codec: 'avc', width: W, height: H },
+    audio: { codec: 'aac', numberOfChannels: 2, sampleRate: 48000 },
+    fastStart: 'in-memory'
+   });
+
+   let encErr = null;
+   const venc = new VideoEncoder({
+    output: (c, m) => muxer.addVideoChunk(c, m),
+    error: e => { encErr = e; console.error('VideoEncoder error:', e); }
+   });
+   venc.configure({
+    codec: sup.vcodec || 'avc1.640028',
+    width: W,
+    height: H,
+    bitrate: 10000000,
+    framerate: FPSSEL,
+    avc: { format: 'avc' }
+   });
+
+   const aenc = new AudioEncoder({
+    output: (c, m) => muxer.addAudioChunk(c, m),
+    error: e => { encErr = e; console.error('AudioEncoder error:', e); }
+   });
+   aenc.configure({
+    codec: 'aac',
+    sampleRate: 48000,
+    numberOfChannels: 2,
+    bitrate: 192000
+   });
+
+   // Encode audio track into AudioEncoder using f32-planar format required by WebCodecs AAC encoder
+   const sr = 48000;
+   const ch0 = pcmBuf.getChannelData(0);
+   const ch1 = pcmBuf.numberOfChannels > 1 ? pcmBuf.getChannelData(1) : ch0;
+   const audioChunkSize = 2048;
+   for (let offset = 0; offset < sampleCount; offset += audioChunkSize) {
+    if (window.__exportStop) throw new Error('Export stopped');
+    const currentChunk = Math.min(audioChunkSize, sampleCount - offset);
+    const pcmData = new Float32Array(currentChunk * 2);
+    pcmData.set(ch0.subarray(offset, offset + currentChunk), 0);
+    pcmData.set(ch1.subarray(offset, offset + currentChunk), currentChunk);
+    const ad = new AudioData({
+     format: 'f32-planar',
+     sampleRate: sr,
+     numberOfChannels: 2,
+     numberOfFrames: currentChunk,
+     timestamp: Math.round((offset * 1e6) / sr),
+     data: pcmData
+    });
+    aenc.encode(ad);
+    ad.close();
+   }
+
+   const offCanvas = document.createElement('canvas'); offCanvas.width = W; offCanvas.height = H;
+   const offCtx = offCanvas.getContext('2d');
+   const segs = timeline.segs;
+   const easeIO = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+   const st = { ptr: 0, lastSeg: null, snappedFor: -2, snapC: document.createElement('canvas'), snapCtx: null };
+   st.snapC.width = W; st.snapC.height = H; st.snapCtx = st.snapC.getContext('2d');
+
+   const drawFrameAt = (gt) => {
+    while(st.ptr < segs.length - 1 && gt >= segs[st.ptr].start + segs[st.ptr].dur) st.ptr++;
+    const seg = segs[st.ptr], lt = Math.max(0, gt - seg.start), q = questions[seg.i];
+    if (seg.type === 'page') {
+     if (st.lastSeg && (st.lastSeg.type === 'reveal' || st.lastSeg.type === 'answer') && st.snappedFor !== st.lastSeg.i) {
+      st.snapCtx.drawImage(offCanvas, 0, 0); st.snappedFor = st.lastSeg.i;
+     }
+     const p = Math.min(1, lt / seg.dur), enter = Math.max(0, Math.min(1, (easeIO(p) - 0.25) / 0.75));
+     drawCanvas(offCtx, W, H, q, seg.i, questions.length, timerD, false, { enter });
+     drawPageTurn(offCtx, W, H, p, st.snapC);
+    } else if (seg.type === 'voice') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, timerD, false, { enter: 1 }); }
+    else if (seg.type === 'count') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, Math.max(0, seg.dur - lt), false, { enter: 1 }); }
+    else if (seg.type === 'reveal') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, 0, true, { enter: 1, revealPop: Math.min(1, lt / 0.3) }); }
+    else if (seg.type === 'answer') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, 0, true, { enter: 1 }); }
+    st.lastSeg = seg;
+   };
+
+   for(let f=0; f<totalFrames; f++){
+    if(window.__exportStop) throw new Error('Export cancelled');
+    if(encErr) throw encErr;
+    drawFrameAt(f / FPSSEL);
+    const vf = new VideoFrame(offCanvas, { timestamp: Math.round(f * 1e6 / FPSSEL), duration: Math.round(1e6 / FPSSEL) });
+    venc.encode(vf, { keyFrame: f % (FPSSEL * 3) === 0 });
+    vf.close();
+
+    // Prevent encoder queue overflow
+    while (venc.encodeQueueSize > 8) {
+     await new Promise(r => setTimeout(r, 8));
+    }
+
+    if(f % 15 === 0 || f === totalFrames - 1){
+     const pct = Math.round((f / totalFrames) * 90) + 5;
+     $('exportStatus').textContent = `Fast encoding MP4 · Frame ${f+1}/${totalFrames} (${pct}%)`;
+     if($('exportOpStatus')) $('exportOpStatus').textContent = 'Encoding MP4 frames…';
+     if($('exportPercent')) $('exportPercent').textContent = `${pct}%`;
+     if($('exportProgressFill')) $('exportProgressFill').style.width = `${pct}%`;
+     if($('exportProgressDetails')) $('exportProgressDetails').textContent = `Frame ${f+1} of ${totalFrames} (${pct}%)`;
+     if(f % 60 === 0) logLiveEvent(`Fast WebCodecs frame progress: ${pct}%.`, 'info');
+     await new Promise(r => setTimeout(r, 0));
+    }
+   }
+
+   $('exportStatus').textContent = 'Flushing encoders & finalizing MP4…';
+   if($('exportOpStatus')) $('exportOpStatus').textContent = 'Finalizing MP4 container…';
+   if($('exportPercent')) $('exportPercent').textContent = '95%';
+   if($('exportProgressFill')) $('exportProgressFill').style.width = '95%';
+
+   await venc.flush();
+   await aenc.flush();
+   muxer.finalize();
+
+   const blob = new Blob([target.buffer], { type: 'video/mp4' });
+   const fname = ($('projectTitle').value||'quiz-video').replace(/[^a-z0-9-_]+/gi,'_') + '.mp4';
+
+   if (window.AndroidBridge && window.__saveBlobToPhone) {
+    const saved = window.__saveBlobToPhone(blob, fname);
+    if (!saved) throw new Error('Could not save MP4 via AndroidBridge.');
+   } else {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = fname; a.click();
+    $('exportStatus').textContent = '✓ Video downloaded (MP4)';
+    if($('exportOpStatus')) $('exportOpStatus').textContent = 'Export completed!';
+    if($('exportPercent')) $('exportPercent').textContent = '100%';
+    if($('exportProgressFill')) $('exportProgressFill').style.width = '100%';
+   }
+
+  } else if (window.AndroidBridge && window.AndroidBridge.initNativeExport) {
+   // Fallback Native MediaCodec export path for WebViews without WebCodecs
+   $('exportStatus').textContent='Starting native MediaCodec hardware encoder…';
+   if($('exportOpStatus')) $('exportOpStatus').textContent='Starting native encoder…';
+   const initOk = AndroidBridge.initNativeExport(W,H,FPSSEL,totalFrames,sampleCount);
+   if(!initOk) throw new Error('Could not initialize native Android encoder.');
+
+   const pcm16 = new Int16Array(sampleCount);
+   for(let i=0;i<sampleCount;i++){
+    const s = Math.max(-1,Math.min(1,channel0[i]));
+    pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+   }
+   const pcmBytes = new Uint8Array(pcm16.buffer);
+   const chunkSize = 131072;
+   for(let offset=0; offset<pcmBytes.length; offset+=chunkSize){
+    if(window.__exportStop){ AndroidBridge.cancelNativeExport(); throw new Error('Export cancelled'); }
+    const slice = pcmBytes.subarray(offset, Math.min(offset+chunkSize, pcmBytes.length));
+    let binary = '';
+    for(let j=0; j<slice.length; j++) binary += String.fromCharCode(slice[j]);
+    AndroidBridge.writePcmChunk(btoa(binary));
+   }
+
+   const offCanvas = document.createElement('canvas'); offCanvas.width=W; offCanvas.height=H;
+   const offCtx = offCanvas.getContext('2d');
+   const segs = timeline.segs;
+   const easeIO = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+   const st = { ptr: 0, lastSeg: null, snappedFor: -2, snapC: document.createElement('canvas'), snapCtx: null };
+   st.snapC.width = W; st.snapC.height = H; st.snapCtx = st.snapC.getContext('2d');
+
+   const drawFrameAt = (gt) => {
+    while(st.ptr < segs.length - 1 && gt >= segs[st.ptr].start + segs[st.ptr].dur) st.ptr++;
+    const seg = segs[st.ptr], lt = Math.max(0, gt - seg.start), q = questions[seg.i];
+    if (seg.type === 'page') {
+     if (st.lastSeg && (st.lastSeg.type === 'reveal' || st.lastSeg.type === 'answer') && st.snappedFor !== st.lastSeg.i) {
+      st.snapCtx.drawImage(offCanvas, 0, 0); st.snappedFor = st.lastSeg.i;
+     }
+     const p = Math.min(1, lt / seg.dur), enter = Math.max(0, Math.min(1, (easeIO(p) - 0.25) / 0.75));
+     drawCanvas(offCtx, W, H, q, seg.i, questions.length, timerD, false, { enter });
+     drawPageTurn(offCtx, W, H, p, st.snapC);
+    } else if (seg.type === 'voice') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, timerD, false, { enter: 1 }); }
+    else if (seg.type === 'count') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, Math.max(0, seg.dur - lt), false, { enter: 1 }); }
+    else if (seg.type === 'reveal') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, 0, true, { enter: 1, revealPop: Math.min(1, lt / 0.3) }); }
+    else if (seg.type === 'answer') { drawCanvas(offCtx, W, H, q, seg.i, questions.length, 0, true, { enter: 1 }); }
+    st.lastSeg = seg;
+   };
+
+   for(let f=0; f<totalFrames; f++){
+    if(window.__exportStop){ AndroidBridge.cancelNativeExport(); throw new Error('Export cancelled'); }
+    drawFrameAt(f / FPSSEL);
+    const imgB64 = offCanvas.toDataURL('image/jpeg', 0.88);
+    AndroidBridge.submitFrame(f, imgB64);
+    if(f % 5 === 0 || f === totalFrames - 1){
+     const pct = Math.round((f / totalFrames) * 90);
+     $('exportStatus').textContent = `Rendering frames ${f+1}/${totalFrames} (${pct}%)...`;
+     if($('exportOpStatus')) $('exportOpStatus').textContent = 'Rendering frames';
+     if($('exportPercent')) $('exportPercent').textContent = `${pct}%`;
+     if($('exportProgressFill')) $('exportProgressFill').style.width = `${pct}%`;
+     if($('exportProgressDetails')) $('exportProgressDetails').textContent = `Frame ${f+1} of ${totalFrames} (${pct}%)`;
+     if(f % 25 === 0) logLiveEvent(`Frame encoding progress: ${pct}%.`, 'info');
+     await new Promise(r => setTimeout(r, 0));
+    }
+   }
+
+   $('exportStatus').textContent = 'Finalizing MediaMuxer MP4 container…';
+   if($('exportOpStatus')) $('exportOpStatus').textContent = 'Finalizing MediaMuxer MP4 container…';
+   if($('exportPercent')) $('exportPercent').textContent = '95%';
+   if($('exportProgressFill')) $('exportProgressFill').style.width = '95%';
+
+   const fname = ($('projectTitle').value||'quiz-video').replace(/[^a-z0-9-_]+/gi,'_') + '.mp4';
+   const resRaw = AndroidBridge.finalizeNativeExport(fname);
+   const res = JSON.parse(resRaw || '{}');
+   if(res.ok){
+    logLiveEvent('Audio muxing completed.', 'success');
+    logLiveEvent('MP4 export completed.', 'success');
+    $('exportStatus').textContent = '✓ Video saved to phone (MP4) — Saved to Movies/QuizStudioPro';
+    if($('exportOpStatus')) $('exportOpStatus').textContent = 'Export completed!';
+    if($('exportPercent')) $('exportPercent').textContent = '100%';
+    if($('exportProgressFill')) $('exportProgressFill').style.width = '100%';
+    if($('exportProgressDetails')) $('exportProgressDetails').textContent = 'Saved to Movies/QuizStudioPro';
+    alert('Export complete! Video saved to Movies/QuizStudioPro');
+   } else {
+    throw new Error(res.error || 'Native export finalization failed.');
+   }
+  } else {
+   throw new Error('MP4 direct export is not supported in this browser.');
+  }
+ }catch(e){ console.warn('export failed',e); $('exportStatus').textContent='Export fail ho gaya: ' + e.message; alert('Export fail ho gaya: '+(e&&e.message?e.message:e)); }
+ window.__tingluExporting=false; try{window.__wlLock&&window.__wlLock.release()}catch(e){} try{ if(window.AndroidBridge&&AndroidBridge.setKeepScreenOn) AndroidBridge.setKeepScreenOn(false); }catch(e){} btn.disabled=false;
+};
+const TEMPLATE_KEY='quizstudiopro_templates_v1';
+function getTemplates(){try{return JSON.parse(localStorage.getItem(TEMPLATE_KEY)||'[]')}catch(e){return []}}
+function setTemplates(a){localStorage.setItem(TEMPLATE_KEY,JSON.stringify(a));renderTemplates()}
+function currentTemplate(){return {cdSound:CD_SOUND,timerDuration:$('timerDuration').value,timerStyle:$('timerStyle').value,ratio:$('ratio').value,headerText:$('headerText').value,theme:{...THEME},tts:ttsSettings()}}
+function applyTemplate(t){if(t.cdSound)setCdSound(t.cdSound);if(t.timerDuration)$('timerDuration').value=t.timerDuration;if(t.timerStyle)$('timerStyle').value=t.timerStyle;if(t.ratio)$('ratio').value=t.ratio;if(typeof t.headerText==='string')$('headerText').value=t.headerText;if(t.theme){setTheme(t.theme);syncThemeUI()}if(t.tts)applyTtsSettings(t.tts);renderPreview();renderList();ensureFonts().then(()=>renderPreview());$('saveStatus').textContent='Template applied'}
+function renderTemplates(){let arr=getTemplates(),sel=$('savedTemplates');sel.innerHTML='';if(!arr.length){let o=document.createElement('option');o.value='';o.textContent='No saved templates yet';sel.appendChild(o)}else arr.forEach((t,i)=>{let o=document.createElement('option');o.value=i;o.textContent=t.name;sel.appendChild(o)});$('templateCount').textContent=arr.length+' saved';let list=$('templateList');list.innerHTML='';arr.forEach((t,i)=>{let el=document.createElement('div');el.className='q-item';let name=document.createElement('span');name.className='qtext';name.textContent=t.name;let apply=document.createElement('button');apply.className='btn mini';apply.textContent='Apply';apply.onclick=()=>applyTemplate(t);let copy=document.createElement('button');copy.className='btn mini';copy.textContent='Copy';copy.onclick=()=>{let a=getTemplates(),n=structuredClone(a[i]);n.name=(n.name||'Template')+' (Copy)';a.splice(i+1,0,n);setTemplates(a)};let del=document.createElement('button');del.className='btn mini ghost';del.textContent='×';del.onclick=()=>{let a=getTemplates();a.splice(i,1);setTemplates(a)};el.append(name,apply,copy,del);list.appendChild(el)})}
+$('saveTemplate').onclick=()=>{let name=$('templateName').value.trim();if(!name){alert('Please enter a template name first.');return}let arr=getTemplates();arr.push({name,...currentTemplate()});setTemplates(arr);$('templateName').value='';$('saveStatus').textContent='Template saved'};
+$('applySaved').onclick=()=>{let arr=getTemplates(),i=+$('savedTemplates').value;if(!arr.length||!arr[i]){alert('Save a template first.');return}applyTemplate(arr[i])};
+$('applyPreset').onclick=()=>{let preset=$('templatePreset').value;let map={spanish:{timerStyle:'spanish',ratio:'16/9'},classic:{timerStyle:'classic',ratio:'16/9'},neon:{timerStyle:'neon',ratio:'16/9'},circular:{timerStyle:'circular',ratio:'16/9'},minimal:{timerStyle:'minimal',ratio:'16/9'},alert:{timerStyle:'alert',ratio:'16/9'},color:{timerStyle:'color',ratio:'16/9'}};applyTemplate(map[preset])};
+$('referenceVideo').onchange=e=>{let f=e.target.files[0];if(!f)return;let v=$('referencePreview');v.src=URL.createObjectURL(f);v.classList.remove('hidden');v.load()};
+$('menuBtn').onclick=()=>{$('sidebar').classList.add('open');$('scrim').classList.remove('hidden')};
+var _cm=$('contactModal');function contactShow(){$('sidebar').classList.remove('open');$('scrim').classList.add('hidden');_cm.classList.remove('hidden')}function contactHide(){_cm.classList.add('hidden')}$('contactOpen').onclick=contactShow;$('contactClose').onclick=contactHide;$('contactClose2').onclick=contactHide;_cm.addEventListener('click',e=>{if(e.target===_cm)contactHide()});
+$('scrim').onclick=()=>{$('sidebar').classList.remove('open');$('scrim').classList.add('hidden')};
+$('sideNew').onclick=()=>$('newProject').click();
+$('settingsJump').onclick=()=>{$('videoSettings').scrollIntoView({behavior:'smooth',block:'start'})};
+function showTplSettings(show){const m=$('templateManager'),b=$('tplToggle');m.classList.toggle('hidden',!show);document.body.classList.toggle('studio',!!show);b.textContent=show?'🎨 Template Settings ▴ (band karo)':'🎨 Template Settings ▾';b.setAttribute('aria-expanded',show?'true':'false');if(show){refreshTimerThumbs();setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});try{renderPreview()}catch(e){}},60)}}
+$('tplToggle').onclick=()=>showTplSettings($('templateManager').classList.contains('hidden'));
+document.querySelectorAll('.side-link:not(#contactOpen)').forEach(b=>b.onclick=()=>{if(b.dataset.target==='templateManager'){document.querySelectorAll('.side-link').forEach(x=>x.classList.remove('active'));b.classList.add('active');showTplSettings(true);$('sidebar').classList.remove('open');$('scrim').classList.add('hidden');return}document.querySelectorAll('.side-link').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.target).scrollIntoView({behavior:'smooth',block:'start'});$('sidebar').classList.remove('open');$('scrim').classList.add('hidden')});
+$('channelName').addEventListener('input',()=>renderPreview());
+// ===== DIRECT EDGE TTS ENGINE (No backend server required) =====
+const TTS = { voices: [], ready: true, running: false, cancel: false };
+
+const ttsEl = id => document.getElementById(id);
+const ttsVoiceId = () => ttsEl('ttsVoice') ? ttsEl('ttsVoice').value : '';
+const ttsSpeedVal = () => ttsEl('ttsSpeed') ? Number(ttsEl('ttsSpeed').value) : 1;
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+const liveLogsHistory = [];
+function logLiveEvent(msg, type = 'info') {
+  const latest = ttsEl('liveLatestMsg');
+  const logList = ttsEl('liveLogList');
+  const now = new Date().toLocaleTimeString();
+  const color = type === 'error' ? '#ff6b6b' : type === 'success' ? '#3ddc84' : type === 'warn' ? '#ffb340' : '#8ab4f8';
+
+  if (latest) {
+    latest.textContent = msg;
+    latest.style.color = color;
+  }
+
+  liveLogsHistory.push({ time: now, msg, type });
+  if (liveLogsHistory.length > 60) liveLogsHistory.shift();
+
+  if (logList) {
+    const div = document.createElement('div');
+    div.style.marginBottom = '2px';
+    div.innerHTML = `<span style="color:#666">[${now}]</span> <span style="color:${color}">●</span> ${escapeHtml(msg)}`;
+    logList.appendChild(div);
+    logList.scrollTop = logList.scrollHeight;
+  }
+}
+window.onQuizLog = (msg, type) => logLiveEvent(msg, type);
+
+const toggleLogBtn = ttsEl('toggleLiveLogs');
+if (toggleLogBtn) {
+  toggleLogBtn.onclick = () => {
+    const logList = ttsEl('liveLogList');
+    if (!logList) return;
+    const isHidden = logList.classList.contains('hidden');
+    logList.classList.toggle('hidden', !isHidden);
+    toggleLogBtn.textContent = isHidden ? 'Logs ▴' : 'Logs ▾';
+  };
+}
+
+// CHANGE 3: Mode toggling
+function syncNarrationModeUI() {
+  const without = isWithoutNarration();
+  const wrapper = ttsEl('ttsControlsWrapper');
+  const notice = ttsEl('withoutNarrationNotice');
+  if (wrapper) {
+    wrapper.style.opacity = without ? '0.45' : '1';
+    wrapper.style.pointerEvents = without ? 'none' : 'auto';
+  }
+  if (notice) notice.style.display = without ? 'block' : 'none';
+  if (without) {
+    logLiveEvent('Narration mode: Without Narration (audio voiceover skipped).', 'info');
+  } else {
+    logLiveEvent('Narration mode: With Narration (Edge TTS enabled).', 'info');
+  }
+}
+if (ttsEl('narrationWith')) ttsEl('narrationWith').onchange = syncNarrationModeUI;
+if (ttsEl('narrationWithout')) ttsEl('narrationWithout').onchange = syncNarrationModeUI;
+
+async function loadVoices(forceRefresh = false) {
+  const st = ttsEl('ttsStatus');
+  const refreshBtn = ttsEl('ttsRefreshBtn');
+  if (refreshBtn) refreshBtn.disabled = true;
+
+  if (st) {
+    st.textContent = 'Connecting to Microsoft Edge TTS...';
+    st.style.color = '#70a5ff';
+  }
+  logLiveEvent('Edge TTS connection started.', 'info');
+
+  const prevVoice = ttsVoiceId();
+  const prevLang = ttsEl('ttsLang') ? ttsEl('ttsLang').value : '';
+
+  if (forceRefresh) {
+    TTS.voices = [];
+  }
+
+  let voices = [];
+  let isLive = false;
+  let fetchError = null;
+
+  try {
+    if (window.AndroidBridge && window.AndroidBridge.fetchVoiceInventory) {
+      const raw = AndroidBridge.fetchVoiceInventory(!!forceRefresh);
+      let parsed = null;
+      try { parsed = JSON.parse(raw); } catch (e) { parsed = null; }
+      if (parsed) {
+        if (Array.isArray(parsed)) {
+          voices = parsed;
+          isLive = true;
+        } else if (parsed.voices) {
+          voices = parsed.voices;
+          isLive = !!parsed.isLive;
+          if (parsed.error) fetchError = parsed.error;
+        }
+      }
+    }
+
+    if (!voices.length && !window.AndroidBridge) {
+      const token = '6A5AA1D4EAFF4E9FB37E23D68491D6F4';
+      const res = await fetch(`https://speech.platform.bing.com/consumer/speech/synthesize/readaloud/voices/list?trustedclienttoken=${token}`);
+      if (res.ok) {
+        const data = await res.json();
+        voices = data.map(v => ({
+          shortName: v.ShortName,
+          friendlyName: v.FriendlyName || v.ShortName,
+          locale: v.Locale,
+          language: v.LocaleName || v.Locale,
+          gender: v.Gender,
+          isOfflineCached: false
+        }));
+        isLive = true;
+      } else {
+        fetchError = `HTTP ${res.status}`;
+      }
+    }
+  } catch (err) {
+    fetchError = err.message || 'Connection error';
+  } finally {
+    if (refreshBtn) refreshBtn.disabled = false;
+  }
+
+  if (voices && voices.length) {
+    TTS.voices = voices;
+    TTS.ready = true;
+    populateTtsLanguages(prevLang);
+    ttsFillVoices(prevVoice);
+
+    if (isLive) {
+      if (st) {
+        st.textContent = `Connected — Live voice inventory (${TTS.voices.length} voices)`;
+        st.style.color = '#3ddc84';
+      }
+      logLiveEvent(`Voice inventory refreshed. Loaded ${TTS.voices.length} live neural voices.`, 'success');
+    } else {
+      if (st) {
+        st.textContent = `Offline — Cached voices (${TTS.voices.length} voices)${fetchError ? ' · ' + fetchError : ''}`;
+        st.style.color = '#ffb340';
+      }
+      logLiveEvent(`Voice inventory loaded from offline cache. ${fetchError || ''}`, 'warn');
+    }
+  } else {
+    if (st) {
+      st.textContent = `Connection failed (${fetchError || 'Unable to reach Microsoft Edge TTS'})`;
+      st.style.color = '#ff6b6b';
+    }
+    logLiveEvent(`Edge TTS connection failed: ${fetchError || 'Connection error'}`, 'error');
+  }
+}
+
+async function ttsInit() {
+  await loadVoices(false);
+}
+
+const ttsRefreshBtn = ttsEl('ttsRefreshBtn');
+if (ttsRefreshBtn) {
+  ttsRefreshBtn.onclick = () => {
+    loadVoices(true);
+  };
+}
+
+function populateTtsLanguages(preserveLang) {
+  const langSel = ttsEl('ttsLang');
+  if (!langSel) return;
+  const currentLang = preserveLang !== undefined ? preserveLang : langSel.value;
+  const langMap = new Map();
+
+  TTS.voices.forEach(v => {
+    if (!v.locale) return;
+    const loc = v.locale.trim();
+    const displayName = v.language ? `${v.language} [${loc}]` : loc;
+    if (!langMap.has(loc)) {
+      langMap.set(loc, displayName);
+    }
+  });
+
+  const sorted = Array.from(langMap.entries()).sort((a,b) => a[1].localeCompare(b[1]));
+  langSel.innerHTML = '<option value="">All Languages</option>' + sorted.map(([loc, name]) => `<option value="${loc}">${name}</option>`).join('');
+  if (currentLang && [...langSel.options].some(o => o.value === currentLang)) {
+    langSel.value = currentLang;
+  }
+}
+
+function ttsFillVoices(preserveVoice) {
+  const g = ttsEl('ttsGender') ? ttsEl('ttsGender').value.trim() : '';
+  const l = ttsEl('ttsLang') ? ttsEl('ttsLang').value.trim() : '';
+  const sel = ttsEl('ttsVoice');
+  if (!sel) return;
+  const keep = preserveVoice !== undefined ? preserveVoice : sel.value;
+
+  const filtered = TTS.voices.filter(v => {
+    const matchL = !l || (v.locale && v.locale.toLowerCase() === l.toLowerCase());
+    const matchG = !g || (v.gender && v.gender.toLowerCase() === g.toLowerCase());
+    return matchL && matchG;
+  });
+
+  if (!filtered.length) {
+    sel.innerHTML = '<option value="">No voices match filter</option>';
+  } else {
+    sel.innerHTML = filtered.map(v => {
+      const tag = v.isOfflineCached ? ' [Cached]' : '';
+      return `<option value="${v.shortName}">${v.friendlyName || v.shortName}${tag}</option>`;
+    }).join('');
+    if (keep && [...sel.options].some(o => o.value === keep)) {
+      sel.value = keep;
+    }
+  }
+
+  if (sel.value) {
+    logLiveEvent(`Selected voice confirmed: ${sel.value}`, 'info');
+  }
+}
+
+async function ttsSynth(text, voice, speed) {
+  if (window.AndroidBridge && window.AndroidBridge.synthesizeSpeech) {
+    const spd = Math.round((speed - 1) * 100);
+    const raw = AndroidBridge.synthesizeSpeech(text, voice, spd);
+    const res = JSON.parse(raw);
+    if (!res.ok) throw new Error(res.error || 'Edge TTS synthesis failed');
+    return res.mp3Base64;
+  }
+  return new Promise((resolve, reject) => {
+    const token = "6A5AA1D4EAFF4E9FB37E23D68491D6F4";
+    const wssUrl = `wss://speech.platform.bing.com/consumer/speech/synthesize/readaloud/edge/v1?TrustedClientToken=${token}`;
+    const ws = new WebSocket(wssUrl);
+    const chunks = [];
+    ws.binaryType = 'arraybuffer';
+    ws.onopen = () => {
+      const ts = new Date().toISOString();
+      ws.send(`X-Timestamp:${ts}\r\nContent-Type:application/json; charset=utf-8\r\nPath:speech.config\r\n\r\n{"context":{"synthesis":{"audio":{"metadataOptions":{"sentenceBoundaryEnabled":"false","wordBoundaryEnabled":"false"},"outputFormat":"audio-24khz-48kbitrate-mono-mp3"}}}}`);
+      const lang = voice.split('-').slice(0, 2).join('-');
+      const spd = speed >= 1 ? `+${Math.round((speed - 1) * 100)}%` : `${Math.round((speed - 1) * 100)}%`;
+      const ssml = `<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${lang}'><voice name='${voice}'><prosody pitch='+0Hz' rate='${spd}' volume='+0%'>${text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</prosody></voice></speak>`;
+      ws.send(`X-RequestId:${Math.random().toString(36).substring(2)}\r\nX-Timestamp:${ts}\r\nContent-Type:application/ssml+xml\r\nPath:ssml\r\n\r\n${ssml}`);
+    };
+    ws.onmessage = (e) => {
+      if (typeof e.data === 'string') {
+        if (e.data.includes('Path:turn.end')) {
+          ws.close();
+          const blob = new Blob(chunks, { type: 'audio/mp3' });
+          const fr = new FileReader();
+          fr.onloadend = () => resolve(fr.result);
+          fr.readAsDataURL(blob);
+        }
+      } else if (e.data instanceof ArrayBuffer) {
+        const view = new DataView(e.data);
+        if (e.data.byteLength > 2) {
+          const headerLen = view.getUint16(0);
+          if (e.data.byteLength > 2 + headerLen) {
+            const headerText = new TextDecoder().decode(new Uint8Array(e.data, 2, headerLen));
+            if (headerText.includes('Path:audio')) {
+              chunks.push(e.data.slice(2 + headerLen));
+            }
+          }
+        }
+      }
+    };
+    ws.onerror = (err) => reject(new Error('Edge TTS WebSocket connection error'));
+  });
+}
+
+async function ttsGenerate() {
+  if (TTS.running) { TTS.cancel = true; return; }
+  if (!questions.length) { alert('Add or import questions first.'); return; }
+  const voice = ttsVoiceId();
+  const speed = ttsSpeedVal();
+  const force = ttsEl('ttsRegen') ? ttsEl('ttsRegen').checked : false;
+  if (!voice) { alert('Select a voice first.'); return; }
+
+  const promptText = q => q.question + ' ' + q.options.map((v, i) => ['A','B','C','D'][i] + ', ' + v).join('. ') + '.';
+  const answerText = q => 'The answer is ' + q.options[q.correct] + '.';
+  const keyFor = q => [voice, speed, q.question, ...q.options, q.correct].join('|');
+
+  const todo = [];
+  questions.forEach((q, i) => {
+    if (force || !q.audioData || !q.answerAudioData || q.ttsKey !== keyFor(q)) {
+      todo.push(i);
+    }
+  });
+
+  const progContainer = ttsEl('ttsProgressContainer');
+  const progFill = ttsEl('ttsProgressFill');
+  const progPct = ttsEl('ttsPercent');
+  const progOp = ttsEl('ttsOpStatus');
+  const progDetails = ttsEl('ttsProgressDetails');
+  const progLegacy = ttsEl('ttsProgress');
+
+  if (!todo.length) {
+    if (progLegacy) progLegacy.textContent = `Narration is already generated for all ${questions.length} questions.`;
+    return;
+  }
+
+  TTS.running = true;
+  TTS.cancel = false;
+  const btn = ttsEl('ttsGenerate');
+  if (btn) btn.textContent = 'Stop generation';
+  if (progContainer) progContainer.style.display = 'block';
+
+  let doneCount = 0;
+  const totalTodo = todo.length;
+
+  for (let idx = 0; idx < totalTodo; idx++) {
+    if (TTS.cancel) {
+      logLiveEvent('Narration generation cancelled by user.', 'warn');
+      break;
+    }
+    const qIndex = todo[idx];
+    const q = questions[qIndex];
+    const qNum = qIndex + 1;
+    const totalQ = questions.length;
+    const currentPct = Math.round((idx / totalTodo) * 100);
+
+    if (progOp) {
+      progOp.textContent = `Generating narration: ${currentPct}%`;
+      progOp.style.color = '#f5f5f5';
+    }
+    if (progPct) progPct.textContent = `${currentPct}%`;
+    if (progFill) progFill.style.width = `${currentPct}%`;
+    if (progDetails) progDetails.textContent = `Question ${qNum} of ${totalQ}`;
+    if (progLegacy) progLegacy.textContent = `Generating narration: ${currentPct}% · Question ${qNum} of ${totalQ}`;
+
+    try {
+      const promptAudio = await ttsSynth(promptText(q), voice, speed);
+      logLiveEvent(`Question ${qNum} narration generated.`, 'info');
+
+      const answerAudio = await ttsSynth(answerText(q), voice, speed);
+      logLiveEvent(`Answer narration generated for Question ${qNum}.`, 'info');
+
+      q.audioData = promptAudio;
+      q.answerAudioData = answerAudio;
+      q.ttsKey = keyFor(q);
+      q.ttsVoice = voice;
+      q.ttsSpeed = speed;
+      q.ttsEngine = 'edge';
+      doneCount++;
+
+      const updatedPct = Math.round(((idx + 1) / totalTodo) * 100);
+      if (progPct) progPct.textContent = `${updatedPct}%`;
+      if (progFill) progFill.style.width = `${updatedPct}%`;
+      if (progOp) progOp.textContent = `Generating narration: ${updatedPct}%`;
+      if (progDetails) progDetails.textContent = `Question ${qNum} of ${totalQ} finished`;
+    } catch (e) {
+      const errMsg = e.message || 'Synthesis failed';
+      logLiveEvent(`Error on Question ${qNum}: ${errMsg}`, 'error');
+      if (progOp) {
+        progOp.textContent = `Error on Q${qNum}: ${errMsg}`;
+        progOp.style.color = '#ff6b6b';
+      }
+      if (progLegacy) progLegacy.textContent = `Error on Q${qNum}: ${errMsg}`;
+      break;
+    }
+  }
+
+  TTS.running = false;
+  TTS.cancel = false;
+  if (btn) btn.textContent = 'Generate narration';
+  renderList();
+  if (typeof scheduleSave === 'function') scheduleSave();
+
+  if (doneCount === totalTodo) {
+    if (progOp) {
+      progOp.textContent = 'Narration generation complete';
+      progOp.style.color = '#3ddc84';
+    }
+    if (progPct) progPct.textContent = '100%';
+    if (progFill) progFill.style.width = '100%';
+    if (progDetails) progDetails.textContent = `All ${questions.length} questions ready.`;
+    logLiveEvent(`Audio preparation completed for all ${questions.length} questions.`, 'success');
+  }
+}
+
+let previewingVoice = false;
+window.onPreviewFinished = () => {
+  previewingVoice = false;
+  const btn = ttsEl('ttsPreview');
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = '▶ Preview voice';
+  }
+  if (ttsEl('ttsProgress') && ttsEl('ttsProgress').textContent === 'Playing voice preview...') {
+    ttsEl('ttsProgress').textContent = 'Voice preview finished.';
+  }
+};
+window.onPreviewError = (err) => {
+  previewingVoice = false;
+  const btn = ttsEl('ttsPreview');
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = '▶ Preview voice';
+  }
+  if (ttsEl('ttsProgress')) {
+    ttsEl('ttsProgress').textContent = 'Voice preview error: ' + err;
+  }
+};
+
+if (ttsEl('ttsPreview')) {
+  ttsEl('ttsPreview').onclick = async () => {
+    const btn = ttsEl('ttsPreview');
+    if (previewingVoice) {
+      if (window.AndroidBridge && window.AndroidBridge.stopPlayback) {
+        AndroidBridge.stopPlayback();
+      }
+      previewingVoice = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '▶ Preview voice';
+      }
+      if (ttsEl('ttsProgress')) ttsEl('ttsProgress').textContent = 'Preview stopped.';
+      return;
+    }
+
+    const q = questions[current];
+    const text = q ? (q.question + ' ' + q.options.map((v,i) => ['A','B','C','D'][i] + ', ' + v).join('. ')) : 'Which planet in our solar system is known as the Red Planet?';
+    btn.disabled = true;
+    btn.textContent = 'Generating…';
+    logLiveEvent(`Preview requested: voice '${ttsVoiceId()}'`, 'info');
+    try {
+      if (window.AndroidBridge && window.AndroidBridge.playPreviewAudio) {
+        previewingVoice = true;
+        AndroidBridge.playPreviewAudio(text, ttsVoiceId(), Math.round((ttsSpeedVal() - 1) * 100));
+        btn.disabled = false;
+        btn.textContent = '■ Stop preview';
+        if (ttsEl('ttsProgress')) ttsEl('ttsProgress').textContent = 'Playing voice preview...';
+      } else {
+        const mp3Url = await ttsSynth(text, ttsVoiceId(), ttsSpeedVal());
+        const audio = new Audio(mp3Url);
+        previewingVoice = true;
+        btn.disabled = false;
+        btn.textContent = '■ Stop preview';
+        audio.onended = () => {
+          previewingVoice = false;
+          btn.textContent = '▶ Preview voice';
+        };
+        audio.onerror = () => {
+          previewingVoice = false;
+          btn.textContent = '▶ Preview voice';
+        };
+        await audio.play();
+        if (ttsEl('ttsProgress')) ttsEl('ttsProgress').textContent = 'Playing voice preview...';
+      }
+    } catch (e) {
+      previewingVoice = false;
+      const err = e.message || 'Preview synthesis failed';
+      logLiveEvent(`Voice preview failed: ${err}`, 'error');
+      alert('Voice preview failed: ' + err);
+      btn.disabled = false;
+      btn.textContent = '▶ Preview voice';
+    }
+  };
+}
+
+if (ttsEl('ttsClear')) {
+  ttsEl('ttsClear').onclick = () => {
+    let count = 0;
+    questions.forEach(q => {
+      if (q.audioData || q.answerAudioData) count++;
+      delete q.audioData; delete q.answerAudioData; delete q.ttsEngine; delete q.ttsKey; delete q.ttsVoice; delete q.ttsSpeed;
+    });
+    renderList();
+    if (typeof scheduleSave === 'function') scheduleSave();
+    if (ttsEl('ttsProgress')) ttsEl('ttsProgress').textContent = `Cleared narration from ${count} questions.`;
+    logLiveEvent(`Cleared narration from ${count} questions.`, 'info');
+  };
+}
+
+if (ttsEl('ttsGender')) ttsEl('ttsGender').onchange = () => {
+  ttsFillVoices();
+  logLiveEvent(`Gender filter set to: ${ttsEl('ttsGender').value || 'All'}`, 'info');
+};
+if (ttsEl('ttsLang')) ttsEl('ttsLang').onchange = () => {
+  ttsFillVoices();
+  const selectedLocale = ttsEl('ttsLang').value;
+  logLiveEvent(`Selected language loaded: ${selectedLocale || 'All'}`, 'info');
+};
+if (ttsEl('ttsVoice')) ttsEl('ttsVoice').onchange = () => {
+  logLiveEvent(`Selected voice confirmed: ${ttsVoiceId()}`, 'info');
+};
+if (ttsEl('ttsSpeed')) ttsEl('ttsSpeed').oninput = () => { if (ttsEl('ttsSpeedV')) ttsEl('ttsSpeedV').textContent = ttsSpeedVal().toFixed(2); };
+if (ttsEl('ttsGenerate')) ttsEl('ttsGenerate').onclick = ttsGenerate;
+// even loudness across engines: only AI narration clips are touched, an uploaded voiceover is left as is
+function normalizeVoice(buf){
+ const n=buf.numberOfChannels;let sum=0,cnt=0,peak=0;
+ for(let c=0;c<n;c++){const d=buf.getChannelData(c);for(let i=0;i<d.length;i+=2){const a=Math.abs(d[i]);if(a>peak)peak=a;if(a>0.01){sum+=a*a;cnt++}}}
+ if(!cnt||!peak)return buf;
+ let g=0.14/Math.sqrt(sum/cnt);g=Math.max(0.2,Math.min(6,g));g=Math.min(g,0.95/peak);
+ if(Math.abs(g-1)<0.03)return buf;
+ const out=new AudioBuffer({length:buf.length,numberOfChannels:n,sampleRate:buf.sampleRate});
+ for(let c=0;c<n;c++){const s=buf.getChannelData(c),d=out.getChannelData(c);for(let i=0;i<s.length;i++)d[i]=s[i]*g}
+ return out;
+}
+// ===== TEMPLATE DESIGNER: edit the look live, save it with the narration voice, export/import as a file =====
+const SZ=[['small','Chota'],['medium','Medium'],['large','Bara']];
+const THEME_UI=[
+ ['Background & font',[['Background colour','bg','color'],['Font style','font',FONT_CHOICES]]],
+ ['Header',[['Header colour','headerBg','color'],['Header design','headerDesign',[['bar','Solid bar'],['round','Rounded bottom'],['stripe','Bar + accent line']]],['Header show / remove','headerShow',[['show','Header dikhao'],['hide','Remove header — header + text gayab']]],['Header size','headerSize',SZ],['Question number','headerNum','color'],['Total (/50)','headerTot','color'],['Header text','headerText','color'],['Header text outline','headerStroke','color'],['Header outline on/off','outHeader',[['on','Outline ON'],['off','No outline — outline hatao']]]]],
+ ['Question',[['Question text','qText','color'],['Question outline','qStroke','color'],['Question outline on/off','outQ',[['on','Outline ON'],['off','No outline — outline hatao']]],['Question size','qSize',SZ]]],
+ ['Option tabs',[['Tab colour','optFill','color'],['Tab shape','optShape',[['pill','Pill (gol)'],['rounded','Rounded'],['square','Square (kone)'],['none','No shape — tabs gayab, sirf text']]],['Tabs quantity','optCount',[['4','4 options (default)'],['3','3 options (C neeche centre)'],['2','2 options']]],['Tab size','optSize',SZ],['Option text','optText','color'],['Option text outline','optStroke','color'],['Option outline on/off','outOpt',[['on','Outline ON'],['off','No outline — outline hatao']]],['Letter badge','badgeFill','color'],['Badge letter','badgeText','color'],['Badge outline','badgeStroke','color'],['Badge letter outline on/off','outBadge',[['on','Outline ON'],['off','No outline — outline hatao']]],['Correct answer','correctFill','color']]],
+ ['Countdown timer',[['Timer design','timerLook',[['capsule','1 · Premium Capsule (bar)'],['segments','2 · LED Segments (bar)'],['ring','3 · Dial Ring (circle)'],['neon','4 · Neon Ring (circle)'],['pie','5 · Pie Wedge (circle)'],['clock','6 · Analog Clock (sui)'],['stopwatch','7 · Stopwatch (sui)'],['orb','8 · Pulse Orb (glow)'],['flatbar','9 · Classic Flat Bar (bar)'],['bold','10 · Bold Stopwatch (poster)']]],['Timer colour 1 (fill)','timerA','color'],['Timer colour 2 (fill)','timerB','color'],['Timer track (khali hissa)','timerTrack','color'],['Timer border (kinara)','timerBorder','color']]]
+];
+function buildThemeEditor(){
+ const host=$('themeEditor');if(!host)return;
+ host.innerHTML='<summary class="label" style="cursor:pointer;margin:6px 0 10px">Template designer — video ka look (kholo / band karo)</summary><p class="hint">Ye controls "Yellow/Black Pill Quiz" design par lagte hain. Badlo, preview live dekho, phir upar naam likh kar "Save Current as Template" dabao.</p><p class="hint" id="fontStatus" style="color:#3ddc84"></p>';
+ THEME_UI.forEach(([title,fields])=>{
+  const box=document.createElement('div');box.className='section';box.innerHTML=`<label class="label">${title}</label>`;
+  const grid=document.createElement('div');grid.className='grid2';
+  fields.forEach(([label,key,kind])=>{
+   const wrap=document.createElement('div');wrap.innerHTML=`<label class="hint" style="margin:0 0 3px;display:block">${label}</label>`;
+   let el;
+   if(kind==='color'){el=document.createElement('input');el.type='color';el.style.padding='2px';el.style.height='38px'}
+   else{el=document.createElement('select');kind.forEach(([v,t])=>{const o=document.createElement('option');o.value=v;o.textContent=t;el.appendChild(o)})}
+   el.id='th_'+key;
+   el.addEventListener('input',()=>{if($('timerStyle').value!=='spanish')$('timerStyle').value='spanish';setTheme({...THEME,[key]:el.value});if(key==='font')ensureFonts().then(()=>{renderPreview();refreshTimerThumbs()});renderPreview();refreshTimerThumbs()});
+   wrap.appendChild(el);grid.appendChild(wrap)});
+  box.appendChild(grid);host.appendChild(box);
+  if(title==='Countdown timer'){const pc=document.createElement('div');pc.id='timerPos';pc.style.cssText='display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:12px';
+   pc.innerHTML='<div><label class="hint" style="display:block;margin:0 0 4px">Timer ki jagah (arrows)</label><div style="display:grid;grid-template-columns:repeat(3,44px);grid-template-rows:repeat(3,36px);gap:4px"><span></span><button type="button" class="btn mini" data-nudge="0,-2,0" title="Oopar">▲</button><span></span><button type="button" class="btn mini" data-nudge="-2,0,0" title="Left">◀</button><button type="button" class="btn mini ghost" id="timerPosReset" title="Wapas asli jagah/size">⟲</button><button type="button" class="btn mini" data-nudge="2,0,0" title="Right">▶</button><span></span><button type="button" class="btn mini" data-nudge="0,2,0" title="Neeche">▼</button><span></span></div></div><div><label class="hint" style="display:block;margin:0 0 4px">Timer ka size: <b id="timerSizeV">100%</b></label><div class="row" style="gap:6px"><button type="button" class="btn" data-nudge="0,0,-0.1" title="Chota" style="min-width:44px">−</button><button type="button" class="btn" data-nudge="0,0,0.1" title="Bara" style="min-width:44px">+</button></div></div>';
+   box.appendChild(pc);
+   const nudge=(dx,dy,ds)=>{if($('timerStyle').value!=='spanish')$('timerStyle').value='spanish';setTheme({...THEME,timerX:THEME.timerX+dx,timerY:THEME.timerY+dy,timerSize:THEME.timerSize+ds});renderPreview();syncTimerPos()};
+   pc.querySelectorAll('[data-nudge]').forEach(b=>{const [dx,dy,ds]=b.dataset.nudge.split(',').map(Number);let t1=null,t2=null;const stop=()=>{clearTimeout(t1);clearInterval(t2)};
+    b.onpointerdown=e=>{e.preventDefault();nudge(dx,dy,ds);t1=setTimeout(()=>{t2=setInterval(()=>nudge(dx,dy,ds),90)},380)};['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,stop));b.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();nudge(dx,dy,ds)}}});
+   pc.querySelector('#timerPosReset').onclick=()=>{setTheme({...THEME,timerX:0,timerY:0,timerSize:1});renderPreview();syncTimerPos()};
+  }
+  if(title==='Countdown timer'){const th=document.createElement('div');th.id='timerThumbs';th.style.cssText='display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px';box.appendChild(th)}});
+ buildTimerThumbs();
+ const row=document.createElement('div');row.className='row';row.innerHTML='<button class="btn ghost" id="themeReset">Original look par wapas</button>';host.appendChild(row);
+ $('themeReset').onclick=()=>{setTheme(THEME_DEFAULT);syncThemeUI();ensureFonts().then(()=>renderPreview());renderPreview()};
+ syncThemeUI();
+}
+function syncTimerPos(){const v=$('timerSizeV');if(v)v.textContent=Math.round(THEME.timerSize*100)+'%'}
+function syncThemeUI(){syncTimerPos();for(const k of Object.keys(THEME_DEFAULT)){const el=$('th_'+k);if(el)el.value=THEME[k]}refreshTimerThumbs()}
+function buildTimerThumbs(){const host=$('timerThumbs');if(!host)return;host.innerHTML='';
+ TIMER_LOOKS.forEach(([id,label])=>{const b=document.createElement('button');b.type='button';b.dataset.look=id;b.className='btn';b.style.cssText='padding:6px;display:flex;flex-direction:column;gap:4px;align-items:center';
+  const c=document.createElement('canvas');c.width=300;c.height=150;c.style.cssText='width:100%;border-radius:8px';const sp=document.createElement('span');sp.className='hint';sp.style.margin='0';sp.textContent=label;b.append(c,sp);
+  b.onclick=()=>{const el=$('th_timerLook');el.value=id;el.dispatchEvent(new Event('input'))};host.appendChild(b)});refreshTimerThumbs()}
+function refreshTimerThumbs(){const host=$('timerThumbs');if(!host)return;const keep=THEME.timerLook;
+ host.querySelectorAll('button').forEach(b=>{const c=b.querySelector('canvas'),x=c.getContext('2d');x.fillStyle=THEME.bg;x.fillRect(0,0,c.width,c.height);
+  const sv={x:THEME.timerX,y:THEME.timerY,z:THEME.timerSize};THEME.timerLook=b.dataset.look;THEME.timerX=0;THEME.timerY=0;THEME.timerSize=1;try{drawTimerLook(x,c.width,c.height,c.height-38-14,38,6.4)}finally{THEME.timerLook=keep;THEME.timerX=sv.x;THEME.timerY=sv.y;THEME.timerSize=sv.z}
+  b.style.outline=b.dataset.look===keep?'2px solid #ffc857':'none'})}
+// narration voice travels with the template / project
+function ttsSettings(){return {voice:ttsEl('ttsVoice').value||'',speed:ttsSpeedVal(),engine:ttsEl('ttsEngine').value,lock:ttsEl('ttsLock').checked}}
+function sanitizeTts(t){if(!t||typeof t!=='object')return null;const o={};if(typeof t.voice==='string'&&/^[a-z0-9_-]{1,40}$/i.test(t.voice))o.voice=t.voice;const sp=Number(t.speed);if(sp>=.7&&sp<=1.5)o.speed=sp;if(['','edge','kokoro','piper'].includes(t.engine))o.engine=t.engine;if(typeof t.lock==='boolean')o.lock=t.lock;return o}
+function applyTtsSettings(t){TTS.pending=sanitizeTts(t);if(TTS.ready)ttsApplyPending()}
+function ttsApplyPending(){const t=TTS.pending;if(!t)return;var _pl=ttsEl('ttsLang');if(_pl)_pl.value='';ttsEl('ttsGender').value='';ttsFillVoices();if(t.voice&&[...ttsEl('ttsVoice').options].some(o=>o.value===t.voice))ttsEl('ttsVoice').value=t.voice;if(t.speed){ttsEl('ttsSpeed').value=t.speed;ttsEl('ttsSpeedV').textContent=Number(ttsEl('ttsSpeed').value).toFixed(2)}if(t.engine!==undefined)ttsEl('ttsEngine').value=t.engine;if(t.lock!==undefined)ttsEl('ttsLock').checked=t.lock;TTS.pending=null}
+// ready-made looks (starting points; every control stays editable)
+const THEME_PRESETS={
+ ocean:{label:'Look: Ocean Blue',theme:{bg:'#dbeafe',headerBg:'#0b2a5b',headerNum:'#fde047',optFill:'#0b2a5b',badgeFill:'#fde047',qText:'#0b2a5b',timerA:'#38bdf8',timerB:'#0284c7',timerTrack:'#bfdbfe',optShape:'rounded'}},
+ night:{label:'Look: Night Neon',theme:{bg:'#0f172a',headerBg:'#020617',headerNum:'#22d3ee',headerTot:'#e2e8f0',headerText:'#22d3ee',headerStroke:'#020617',qText:'#f8fafc',qStroke:'#0f172a',optFill:'#1e293b',optText:'#f8fafc',optStroke:'#0f172a',badgeFill:'#22d3ee',badgeText:'#020617',badgeStroke:'#020617',correctFill:'#22c55e',timerA:'#22d3ee',timerB:'#a855f7',timerTrack:'#334155',font:'Poppins'}},
+ sunset:{label:'Look: Sunset Pop',theme:{bg:'#fff1e6',headerBg:'#b91c1c',headerNum:'#fde047',headerDesign:'stripe',optFill:'#7c2d12',badgeFill:'#fb923c',qText:'#7c2d12',timerA:'#fb923c',timerB:'#dc2626',optShape:'square',font:'Lilita One'}}
+};
+Object.entries(THEME_PRESETS).forEach(([k,v])=>{const o=document.createElement('option');o.value='look-'+k;o.textContent=v.label;$('templatePreset').appendChild(o)});
+const __oldPreset=$('applyPreset').onclick;
+$('applyPreset').onclick=()=>{const v=$('templatePreset').value;
+ if(v.startsWith('look-')){const p=THEME_PRESETS[v.slice(5)];if(p){$('timerStyle').value='spanish';setTheme({...THEME_DEFAULT,...p.theme});syncThemeUI();renderPreview();ensureFonts().then(()=>renderPreview());$('saveStatus').textContent='Look applied'}}
+ else{__oldPreset();if(v==='spanish'){setTheme(THEME_DEFAULT);syncThemeUI();renderPreview()}}};
+// update / export / import
+const selTemplateIdx=()=>{const arr=getTemplates(),i=+$('savedTemplates').value;return arr[i]?i:-1};
+$('updateTemplate').onclick=()=>{const i=selTemplateIdx();if(i<0){alert('Pehle "Saved templates" me se template chunein.');return}const arr=getTemplates();arr[i]={name:arr[i].name,...currentTemplate()};setTemplates(arr);$('savedTemplates').value=String(i);$('saveStatus').textContent='Template update ho gaya'};
+$('exportTemplate').onclick=()=>{const i=selTemplateIdx();if(i<0){alert('Pehle template chunein.');return}const t=getTemplates()[i];const blob=new Blob([JSON.stringify({app:'Quiz Studio Pro Template',version:1,template:t},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(t.name||'template').replace(/[^a-z0-9-_]+/gi,'_')+'.template.json';a.click();URL.revokeObjectURL(a.href)};
+$('importTemplate').onchange=async e=>{const f=e.target.files[0];if(!f)return;
+ try{const d=JSON.parse(await f.text());const t=d.template||d;if(!t||typeof t.name!=='string'||!t.name.trim())throw new Error('bad');
+  const clean={name:t.name.trim().slice(0,60),cdSound:(CD_SOUNDS.some(x=>x[0]===t.cdSound)||/^(custom[1-3]|pack1)$/.test(t.cdSound))?t.cdSound:'clock',timerDuration:['5','10','15','20','30'].includes(String(t.timerDuration))?String(t.timerDuration):'10',timerStyle:[...$('timerStyle').options].some(o=>o.value===t.timerStyle)?t.timerStyle:'spanish',ratio:['16/9','9/16','1/1'].includes(t.ratio)?t.ratio:'16/9',headerText:typeof t.headerText==='string'?t.headerText.slice(0,40):'GUESS THE ANSWER',theme:sanitizeTheme(t.theme),tts:sanitizeTts(t.tts)};
+  const arr=getTemplates();arr.push(clean);setTemplates(arr);alert('Template import ho gaya: '+clean.name)}catch(err){alert('Ye template file parhi nahi ja saki.')}e.target.value=''};
+buildThemeEditor();
+ensureFonts().then(()=>{try{renderPreview()}catch(e){}});
+ttsInit();
+renderList();renderPreview();renderTemplates();
+</script><script src="question-import.js"></script><script src="pro-enhancements.js"></script><footer style="text-align:center;padding:18px 12px;color:#a8a8a8;font-size:13px;border-top:1px solid #262626">Quiz Studio Pro</footer></body></html>

@@ -1,0 +1,6 @@
+{
+  "name": "Quiz Studio Pro",
+  "description": "Professional quiz video studio for Android featuring custom templates, countdown audio, timeline editor, and MP4 export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

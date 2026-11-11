@@ -1,0 +1,10 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const sandbox={window:{}};vm.createContext(sandbox);vm.runInContext(fs.readFileSync('app/src/main/assets/www/timeline-engine.js','utf8'),sandbox);
+const questions=[{question:'Q1',ttsEngine:'edge'},{question:'Q2',ttsEngine:'edge'}];
+const result=sandbox.window.QuizTimeline.build(questions,[{duration:2},{duration:3}],10,[{duration:1},{duration:1.5}]);
+assert.deepEqual(Array.from(result.segs,x=>x.type),['voice','count','reveal','answer','page','voice','count','reveal','answer']);
+assert.equal(result.segs[1].start,2); assert.equal(result.segs[2].start,12); assert.equal(result.segs[3].start,12.52); assert.equal(result.segs[4].start,13.52);
+assert.equal(result.total,29.44);
+assert.throws(()=>sandbox.window.QuizTimeline.build(questions,[{duration:2},null],10,[{duration:1},{duration:1}]));
+assert.throws(()=>sandbox.window.QuizTimeline.build(questions,[{duration:2},{duration:3}],0,[{duration:1},{duration:1}]));
+console.log('PASS: prompt → countdown → reveal → answer ordering, transitions, decoded durations and validation');
